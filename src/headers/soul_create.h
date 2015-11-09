@@ -38,7 +38,10 @@ typedef struct soul
         byte luck;      byte speed;
         byte type;
 
- 	attr_t attr;	item_t bandaid;
+ 	attr_t attr;
+	item_t bandaid;
+	skill_t *skill;		// Link to primary skill.
+	container_t bucket;	// Holds the skills.
 
 } soul_t; 
 

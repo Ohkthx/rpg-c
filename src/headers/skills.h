@@ -8,4 +8,13 @@ typedef struct skill
 
 } skill_t;
 
+typedef struct container
+{
+	struct skill archery;
+	struct skill fencing;
+	struct skill magery;
+	struct skill swordsmanship;
+	struct skill macefighting;
+} container_t;
+
 #endif

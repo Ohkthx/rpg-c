@@ -42,6 +42,7 @@ int soul_create(soul_t *creature, char *name, char *desc, char p_class, int lvl)
 
 			printf("\n Player name: %s\n Description: %s\n  Health: %d\n  Damage: %d\n  Speed: %d\n",
 					creature->name, creature->desc, creature->hp, creature->dmg, creature->speed);
+			printf(" Primary Skill:\n   %s, %.1f \n", creature->skill->name, creature->skill->val);
 
 			item_init(&creature->bandaid, "bandaids",  10);
 
@@ -101,7 +102,10 @@ int class_create(soul_t *p, char p_class, int lvl)
 				//p->attr.pri = &p->attr.dexterity;
 				//p->attr.sec = &p->attr.strength;	// Used for stat_gain
 				//p->attr.ter = &p->attr.wisdom;
-
+				
+				p->skill = &p->bucket.archery;
+				strncpy(p->skill->name, "Archery", 7);
+				p->skill->val = 50.0;
 				lpctr = 1;		// To break out of while.
 				break;
 
@@ -119,6 +123,9 @@ int class_create(soul_t *p, char p_class, int lvl)
 				//p->attr.sec = &p->attr.dexterity;	// Used for stat_gain
 				//p->attr.ter = &p->attr.strength;
 
+				p->skill = &p->bucket.magery;
+				strncpy(p->skill->name, "Magery", 6);
+				p->skill->val = 50.0;
 				lpctr = 1;		// To break out of while.
 				break;
 
@@ -136,6 +143,9 @@ int class_create(soul_t *p, char p_class, int lvl)
 				//p->attr.sec = &p->attr.dexterity;	// Used for stat_gain
 				//p->attr.ter = &p->attr.wisdom;
 
+				p->skill = &p->bucket.fencing;
+				strncpy(p->skill->name, "Fencing", 7);
+				p->skill->val = 50.0;
 				lpctr = 1;		// To break out of while.
 				break;
 

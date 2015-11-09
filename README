@@ -21,7 +21,7 @@ Compiled using make in the the same directory as this README file.
 ;- Start of Change Log.
 Change Log:
 	09, NOV:
-		+ Begin working on adding skills.
+		+ Skills added (not functional.) *Need to add skill_gain to skills.c.
 		+ Fixed a health mis-match on loading a profile. Also changed the name of the
 		   load function to load_profile function. (making way for a load_config)
 	08, NOV:
