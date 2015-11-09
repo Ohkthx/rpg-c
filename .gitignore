@@ -39,6 +39,7 @@ rpg-c
 
 # YouCompleteMe
 .ycm_extra_conf.py
+.ycm_extra_conf.pyc
 
 # Directories
 bin/

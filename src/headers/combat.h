@@ -3,6 +3,7 @@
 
 #include "soul_create.h"
 #include "menus.h"
+#include "skills.h"	// struct with skills.
 
 int  combat(soul_t *ptr);
 int  round_start(soul_t *player, soul_t *npc);

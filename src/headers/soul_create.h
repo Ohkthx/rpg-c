@@ -2,6 +2,8 @@
 #define ORGA_CREATE_INCLUDED
 
 
+#include "skills.h"
+
 typedef unsigned char byte;
 
 typedef struct item   
