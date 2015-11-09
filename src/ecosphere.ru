@@ -1,0 +1,10 @@
+dungeon:9;
+dungeon:Dungeon Entrance;
+dungeon:Hallway;
+dungeon:Long Corridor;
+dungeon:Dark Room;
+dungeon:Open Room;
+dungeon:Damp Room;
+dungeon:Tattered Lair;
+dungeon:Secret Area;
+dungeon:Dungeon Exit;

@@ -1,0 +1,121 @@
+
+Created by: Ryan Ball (0x1p+2)
+
+	Date: 24 OCT 2015
+	
+Compiled using make in the the same directory as this README file.
+
+  make :	compiles the entire program into "rpg-c". 
+		"rpg-c" will be located in either bin/ or the parent directory.
+  make clean :	removes all objs from installation.
+
+ Directories:
+ 	bin/		: May contain the executable for the program.
+	src/		: All .c source files.
+	src/headers	: Headers for the .c source files.
+	objs/		: Object files (.o) files from the compiling.
+	bak/		: Store backups for headers and c source files.
+	dev_test/	: A temporary directory for testing ideas.
+	save/		: Stores player information.
+
+;- Start of Change Log.
+Change Log:
+	08, NOV:
+		+ Added possible stat gain of strength on bandages. Changed the hp formula
+		   of how much strength influences hp.
+		   + Small issue resolved where hp wasn't being updated in stage() and
+		      round_start() *hp formula.
+		+ "Randomized" dungeon room descriptions. (similar to how the rooms is done)
+		+ Resolved "range" issue. Round was being skipped due to a newline being
+		   being processed.
+		+ Added the ability to view the changelog in game (only at the main menu)
+		   A fancy viewing of the README fle using ';-' as a token.
+	07, NOV:
+		+ Added password hashing. Prompts and saves password hash with profile.
+		   Not exactly the most "secure" implementation but it is a working example.
+		+ You now have the ability to set the mob's type ([A]rcher, [M]age, [W]arrior.
+		   This is an extension of being able to select the Mobs level. Eventually this 
+		   will be randomized and determined by the location you are in.
+	06, NOV:
+		+ Main menu moved to "stage" (location.h)
+		  + Bandaid use added to the staging area.
+		  + Combat (Arena like-) added to the staging area
+		  + Added stat view ability (added to stage)
+		  + Created a quit (free's players struct and the nodes (locations))
+		+ Little modifications to Combat (text display)
+		+ Dungeon rooms added
+		  + Names come from a list; DESCRIPTION TO BE DONE THE SAME WAY.
+		+ Stage is a part of the "head" node (location), dungeon branches off from it.
+	05, NOV:
+		+ Resolved a bandage count (-3), wasn't being saved with profile and was
+		   Pulling a random number.
+		+ Prevented using more than you had of bandages. 
+		+ Locations added (node_t struct in soul_create.h)
+		+ Greeting menu added (non-location ATT)
+		+ Changed humanoid_t to soul_t (Struct to create players and mobs)
+	04, NOV:
+		+ Save and loading added.
+		+ Started working on locations.
+	03, NOV:
+		+ ADDED BANDAGES! Yes, a new way to heal.
+		+ Mid-round menu added to access said bandages.
+	02, NOV:
+		+ Stat gain implemented (Speed in gaining is dependent on stat total.
+	01, NOV:
+		+ Added defense attribute to the player and Monster.
+		+ Added a chance to block.
+		+ Mob levels implemented. Merged the functions that create players and mobs.
+	29-31OCT:
+		+ Attempted to work in a Ring (Circular buffer) for the combat log. 
+		   It is semi-working but needs to be designed better. Commented out and
+		   left the struct along with the lines to start the buffer. To be revisted
+		   At a later time.
+	28, OCT:
+		+ Added range to the combat. Now Mobs and Players have a range to them.
+	27, OCT:
+		+ Created menu's/HUDs for the combat to get a better idea what is happening.
+		+ Split it into several files. Created headers and did cleaning.
+		+ Create "Makefile" for easier compiling.
+		+ Created "luck" to help change gold loot.
+		+ Made strength reflect HP gain. ATT: 1str = 5hp.
+	26, OCT:
+		+ Creation of combat. Simple compution of predefined values.
+		+ Begin working with formulas for damage (using a modulus and rand())
+		+ Creation of simple "classes", Mage, Warrior, Archer,
+		+ Introduction of sub struct for said classes.
+	25, OCT:
+		+ Introduction of functions for character creation and mob creation.
+	24, OCT:
+		+ Initial creation. Started with a struct to hold user data.
+
+;- End of Change log.
+
+Plan:
+	[#] Defense attribute
+	[#] Range
+	[#] Luck
+	[ ] "Better Menus"
+	    [#] Change log.
+	    [#] Stat Menu.
+	    [#] Next and Previous Location.
+	    [#] Bandages
+	[ ] Combat log		*save it to a buffer.
+	[#] Mob Levels
+	[#] Menu mid-fight.
+	[ ] Specials
+	[ ] Armor (Add to def modulus)
+	[ ] Weapon (Add to damage modulus)
+	[#] Missing + full block.
+	[#] Locations.
+	[#] Start menu
+	[#] Stat gain.
+	[ ] Add skills
+	[#] Passwords
+	[#] "World" environment
+	[#] Rooms (Random set up)
+	[#]   + Description as random.
+	[#] Lod/Save game
+	[#] Bandages
+	[#] Change mob classes (same as players types.)
+	[#] Main Menu "Read Change Log"
+
