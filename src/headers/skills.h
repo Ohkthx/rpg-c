@@ -17,4 +17,7 @@ typedef struct container
 	struct skill macefighting;
 } container_t;
 
+
+int skill_check(skill_t *skill);
+
 #endif
