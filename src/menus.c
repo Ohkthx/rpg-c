@@ -153,6 +153,7 @@ void stat_print(struct soul * ptr)
 {
 	struct item * item = &ptr->bandaid;
 	char string[21], pclass[8];
+
 	hpbar(ptr, string, 20);
 
 	switch(ptr->attr.cls)

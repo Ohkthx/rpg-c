@@ -27,6 +27,7 @@
 *.i*86
 *.x86_64
 *.hex
+rpg-c
 
 # Debug files
 *.dSYM/
@@ -34,6 +35,10 @@
 # Vim
 *.swp
 *.bak
+.*.c
+
+# YouCompleteMe
+.ycm_extra_conf.py
 
 # Directories
 bin/

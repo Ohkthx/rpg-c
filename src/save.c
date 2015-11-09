@@ -111,7 +111,7 @@ float load_d(int code)
 	return (int) n;
 }
 
-int load(soul_t *ptr)
+int load_profile(soul_t *ptr)
 {
 	int n, i, x;
 	char ch, string[256], filename[(sizeof(ptr->name) + 4)];
@@ -228,7 +228,7 @@ int load(soul_t *ptr)
 		tools("pause", NULL);
 		/*  */
 
-		ptr->hp = ((ptr->attr.strength * 7) + 50);
+		ptr->hp = ((ptr->attr.strength * 3) + 50);
 		ptr->hp_c = ptr->hp;
 		ptr->speed = (rand() % (sizeof(byte) - 10));
 

@@ -49,7 +49,7 @@ int soul_create(soul_t *creature, char *name, char *desc, char p_class, int lvl)
 			getchar();
 			tools("pause", NULL);
 		} else
-			load(creature);	
+			load_profile(creature);	
 	} else
 	{
 		strncpy(creature->name, name, sizeof(creature->name));	// Changed from strcpy (safer now)

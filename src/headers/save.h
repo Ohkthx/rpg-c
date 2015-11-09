@@ -7,7 +7,7 @@
 
 int   file_exists(char *ptr);
 int   save(soul_t *ptr);
-int   load(soul_t *ptr);
+int   load_profile(soul_t *ptr);
 void  ntof(char *filename);
 float load_d(int code);
 unsigned long hash(unsigned char *plaintext);
