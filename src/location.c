@@ -83,7 +83,7 @@ void world_grab(struct node *head)
 	// echophere.ru:  dungeon:name:NAME;
 	// 		  dungeon:description:DESCRIPTION;
 
-	wd = fopen("ecosphere.ru", "r");
+	wd = fopen("ecosphere.in", "r");
 	while((ch = fgetc(wd)) != EOF)
 	{
 		if(ch == '\n')
