@@ -9,7 +9,8 @@ typedef struct stats
 {
 	int range;	int range_c;
         byte wisdom;    byte dexterity;
-        byte strength;  byte cls;
+        byte strength;  
+       	char cls;
 	char p;		char p_lck;
 	char s;		char s_lck;
 	char t;		char t_lck;

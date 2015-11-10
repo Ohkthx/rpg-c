@@ -80,6 +80,8 @@ int save(soul_t *ptr)
 		fprintf(fd, "tertiary_lock:%d;\n", ptr->stats.t_lck);
 		//fprintf(fd, "\n -   I T E M S   - - - - - - - - - - - - - \n");
 		fprintf(fd, "bandaids:%d;\n", ptr->objs.bandaid.amount);
+		fprintf(fd, "arrows:%d;\n", ptr->objs.arrow.amount);
+		fprintf(fd, "reagents:%d;\n", ptr->objs.reagent.amount);
 
 		fclose(fd);
 		printf("\n   Changes written to: %s\n", filename);
@@ -206,6 +208,12 @@ int load_profile(soul_t *ptr)
 
 				} else if(!strncmp(tokk, "bandaids", 8)) {
 					ptr->objs.bandaid.amount = load_d(0);
+
+				} else if(!strncmp(tokk, "arrows", 6)) {
+					ptr->objs.arrow.amount = load_d(0);
+
+				} else if(!strncmp(tokk, "reagents", 8)) {
+					ptr->objs.reagent.amount = load_d(0);
 
 				}
 

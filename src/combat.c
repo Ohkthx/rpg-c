@@ -6,6 +6,7 @@
 
 #include "headers/combat.h"
 #include "headers/menus.h"
+#include "headers/items.h"
 
 
 int combat(soul_t *ptr)
@@ -61,6 +62,20 @@ int round_start(soul_t *player, soul_t *npc)
 
 	player->stats.range_c = player->stats.range; 	// Start of round to set current range
 	npc->stats.range_c = npc->stats.range;		//  to the max range of the mob/person.
+
+	if(player->stats.cls == 'a')
+		player->consumable = &player->objs.arrow;
+	else if(player->stats.cls == 'm')
+		player->consumable = &player->objs.reagent;
+	else
+		player->consumable = &npc->objs.null;
+
+	if(npc->stats.cls == 'a')
+		npc->consumable = &npc->objs.arrow;
+	else if(npc->stats.cls == 'm')
+		npc->consumable = &npc->objs.reagent;
+	else
+		npc->consumable = &npc->objs.null;
 	
 	tools("clear", NULL);
 	//printf("Player hp: %d, Monster: %d\n", player->hp_c, npc->hp_c);
@@ -69,19 +84,14 @@ int round_start(soul_t *player, soul_t *npc)
 	{
 		player->hp = ((player->stats.strength * 3) + 50);
 		menus(player, 11);	// 11 for *new* menu.
+		menus(player, 4);
 		menus(npc, 1);		// 33 for *new* menu.
 
 		player->dmg = damage_calc(player);	// Calculate players damage for the round.
 		npc->dmg = damage_calc(npc);
 
-		//printf(" [ DEBUG ]  %c Damage: %d\n", player->type, player->dmg);
-		//printf(" [ DEBUG ]  %c Damage: %d\n", npc->type, npc->dmg);
-
 		player->def = defense_calc(player);
 		npc->def = defense_calc(npc);
-
-		//printf(" [ DEBUG ]  %c Defense: %d\n", player->type, player->def);
-		//printf(" [ DEBUG ]  %c Defense: %d\n", npc->type, npc->def);
 
 		if(player->speed > npc->speed)	// Figure out who is attacker and who is the 
 		{				//  defender for this round. This pointer will
@@ -95,18 +105,22 @@ int round_start(soul_t *player, soul_t *npc)
 		switch(w = range_count(a_, d_))		// Checks the range between each mob. 
 		{					// If:   The attack range is greater than the
 			case 1:				//  defenders max range, it will attack
-				attack(a_, d_);	//  without being attacked.
+				if(item_consume(a_))
+					attack(a_, d_);	//  without being attacked.
 				break;			// Performs the same check for defender.
 			case 2:	
-				attack(d_, a_);	// Defender attacks if has higher range.
+				if(item_consume(d_))
+					attack(d_, a_);	// Defender attacks if has higher range.
 				break;
 			case -1:
 				break;
 			default:
-				attack(a_, d_);	// Attackers attack.
+				if(item_consume(a_))
+					attack(a_, d_);	// Attackers attack.
 				if(d_->hp_c == 0)	// Placed to prevent excess
 					break;		//  turn from happening.
-				attack(d_, a_);	// Defender's attack.
+				if(item_consume(d_))
+					attack(d_, a_);	// Defender's attack.
 		}
 		
 		if(a_->hp_c == 0 || d_->hp_c ==0)	// A check for HP, to end the round.
@@ -115,6 +129,7 @@ int round_start(soul_t *player, soul_t *npc)
 		//fputs("\0337", stdout);	// Part of *new* menu.
 		//fputs("\033[0;4H\r", stdout); // Part of *new* menu.
 		menus(player, 2); 		// 3  for *new* menu.
+		menus(player, 4);
 		menus(npc, 11);			// 12 for *new* menu.
 		//fputs("\0338", stdout);	// Part of *new* menu
 

@@ -16,12 +16,14 @@ typedef struct item
 
 typedef struct objects
 {
+	struct item null;
 	struct item bandaid;
 	struct item arrow;
 	struct item reagent;
 
 } objects_t;
 
+//  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //
 
 typedef struct soul 
 {
@@ -36,6 +38,7 @@ typedef struct soul
 
  	stats_t     stats;	// Player's stats
 	item_t      *item;	// "Current" item.
+	item_t 	    *consumable;
 	skill_t     *skill;	// Link to primary skill.
 	objects_t   objs;	// Holds items.
 	container_t bucket;	// Holds the skills.

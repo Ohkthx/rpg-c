@@ -44,7 +44,7 @@ int soul_create(soul_t *creature, char *name, char *desc, char p_class, int lvl)
 					creature->name, creature->desc, creature->hp, creature->dmg, creature->speed);
 			printf(" Primary Skill:\n   %s, %.1f \n", creature->skill->name, creature->skill->val);
 
-			item_init(&creature->objs.bandaid, "bandaids",  10);
+			item_init(&creature->objs.bandaid, "Bandage",  10);
 
 			save(creature);
 			getchar();
@@ -59,8 +59,12 @@ int soul_create(soul_t *creature, char *name, char *desc, char p_class, int lvl)
 		creature->type = 'm';				// Set type to mob ( m = mob )
 		creature->gold = (250.00 * ((float)lvl / 2));				// Gold being held.
 
+		
+		item_init(&creature->objs.bandaid, "Bandage",  0);
+
 		class_create(creature, p_class, lvl);
 	}
+
 
 	return 0;
 }
@@ -87,6 +91,9 @@ int class_create(soul_t *p, char p_class, int lvl)
 			opt = tolower(opt);
 		}
 
+		p->objs.arrow.amount = 0;
+		p->objs.reagent.amount = 0;
+
 		switch(opt)
 		{
 			case 'a':	// Archer
@@ -106,6 +113,11 @@ int class_create(soul_t *p, char p_class, int lvl)
 				p->skill = &p->bucket.archery;
 				strncpy(p->skill->name, "Archery", 7);
 				p->skill->val = 50.0;
+				
+
+				item_init(&p->objs.arrow, "Arrow", 250);
+				p->consumable = &p->objs.arrow;
+
 				lpctr = 1;		// To break out of while.
 				break;
 
@@ -126,6 +138,10 @@ int class_create(soul_t *p, char p_class, int lvl)
 				p->skill = &p->bucket.magery;
 				strncpy(p->skill->name, "Magery", 6);
 				p->skill->val = 50.0;
+
+				item_init(&p->objs.reagent, "Reagent", 250);
+				p->consumable = &p->objs.reagent;
+
 				lpctr = 1;		// To break out of while.
 				break;
 
@@ -146,6 +162,10 @@ int class_create(soul_t *p, char p_class, int lvl)
 				p->skill = &p->bucket.fencing;
 				strncpy(p->skill->name, "Fencing", 7);
 				p->skill->val = 50.0;
+
+				item_init(&p->objs.null, "NULL", 0);
+				p->consumable = &p->objs.null;
+
 				lpctr = 1;		// To break out of while.
 				break;
 
