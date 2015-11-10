@@ -21,6 +21,9 @@ Compiled using make in the the same directory as this README file.
 
 ;- Start of Change Log.
 Change Log:
+	10, NOV:
+		+ Added loading of items from data/items.in. To add items, update items.c and
+		   the items.in file. <items.c just needs to add the id entry.>
 	09, NOV:
 		+ New directory to hold game data. Moved ecosphere and item db to data/
 		+ Items are now in a container called objs. This will allow for new items to be

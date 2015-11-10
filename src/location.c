@@ -19,7 +19,6 @@ void list_print(struct node *head)
 		printf("Name: %s; ID: %d\n", current->name, current->id);
 		current = current->next;
 	}
-
 }
 
 void list_push(struct node *head)
@@ -83,7 +82,7 @@ void world_grab(struct node *head)
 	// echophere.ru:  dungeon:name:NAME;
 	// 		  dungeon:description:DESCRIPTION;
 
-	wd = fopen("ecosphere.in", "r");
+	wd = fopen("data/ecosphere.in", "r");
 	while((ch = fgetc(wd)) != EOF)
 	{
 		if(ch == '\n')

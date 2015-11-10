@@ -29,8 +29,9 @@ int main(void)
 	head->next = NULL;
 
 	location_create(head, "Dungeon Entrance", "Welcome to the start of the dungeon!");
-	//head->next = NULL;
-	
+
+	item_load(&ptr->objs);
+
 	while(1)
 		stage(head, ptr);
 

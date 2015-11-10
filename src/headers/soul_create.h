@@ -7,7 +7,9 @@
 typedef struct item   
 {
 	char name[16];
-        int amount;	int stock;
+	int id;
+        int amount;
+	int stock;
         float cost;
 
 } item_t; 
@@ -15,6 +17,8 @@ typedef struct item
 typedef struct objects
 {
 	struct item bandaid;
+	struct item arrow;
+	struct item reagent;
 
 } objects_t;
 

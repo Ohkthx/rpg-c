@@ -6,5 +6,6 @@
 
 void item_init(item_t *item, char *name, int amount);
 void item_use(soul_t *ptr, char *name);
+void item_load(objects_t *objs);
 
 #endif

@@ -1,10 +1,64 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include "headers/soul_create.h"
 #include "headers/items.h"
 #include "headers/menus.h"
 #include "headers/combat.h"
+
+void item_load(objects_t *objs)
+{
+	struct item *item;
+	FILE *fd;
+	char ch, string[128], *tokk, *ptr;
+	long id;
+	int n;
+
+	n = id = 0;
+
+	fd = fopen("data/items.in", "r");
+	while((ch = fgetc(fd)) != EOF)
+	{
+		string[n] = ch;
+
+		if(ch == '\n')
+		{
+			string[n] = '\0';
+			n = -1;
+
+			if(strlen(string) > 0)
+				tokk = strtok(string, ":;");
+
+			id = strtol(tokk, &ptr, 10);
+
+			if(id == 1)
+				item = &objs->bandaid;
+			else if(id == 2)
+				item = &objs->arrow;
+			else if(id == 3)
+				item = &objs->reagent;
+
+			if(id != 0 && id < 4)
+			{
+				item->id = id;
+
+				tokk = strtok(NULL, ":;");
+				strncpy(item->name, tokk, 7);
+
+				tokk = strtok(NULL, ":;");
+				item->stock = strtol(tokk, &ptr, 10);
+
+				tokk = strtok(NULL, ":;");
+				item->cost = strtof(tokk, &ptr);
+			}
+		}
+
+		n++;
+	}
+
+	fclose(fd);
+}
 
 void item_init(item_t *item, char *name, int amount)
 {
