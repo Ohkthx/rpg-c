@@ -32,7 +32,7 @@
 #include "location.h"
 
 
-typedef struct _buff_t
+typedef struct buffer
 {
 	char buff[MAXCHAR];
 	char *start;
@@ -40,7 +40,7 @@ typedef struct _buff_t
 	int *pos;
 	int l_cnt;
 
-} buff_t;
+} buffer_t;
 
 //int getint(int *num);
 
@@ -51,6 +51,6 @@ void round_menu(soul_t *ptr);
 void stat_print(soul_t *ptr);
 void quit(soul_t *ptr, node_t *head);
 void readme_read(void);
-//void bprintf(b_buff_t *pbuf, char *fmt, ...);
+//void bprintf(buffer_t *pbuf, char *fmt, ...);
 
 #endif

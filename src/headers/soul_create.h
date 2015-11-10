@@ -4,9 +4,8 @@
 
 #include "skills.h"
 
-typedef unsigned char byte;
 
-typedef struct item   
+typedef struct _item_t   
 {
 	char name[16];
         int amount;	int stock;
@@ -15,17 +14,6 @@ typedef struct item
 
 } item_t; 
 
-typedef struct _attr_t
-{
-	int range;	int range_c;
-        byte wisdom;    byte dexterity;
-        byte strength;  byte cls;
-	char p;		char p_lck;
-	char s;		char s_lck;
-	char t;		char t_lck;
-	byte *pri, *sec, *ter;
-
-} attr_t; 
 
 typedef struct soul 
 {
@@ -38,7 +26,7 @@ typedef struct soul
         byte luck;      byte speed;
         byte type;
 
- 	attr_t attr;
+ 	stats_t stats;
 	item_t bandaid;
 	skill_t *skill;		// Link to primary skill.
 	container_t bucket;	// Holds the skills.

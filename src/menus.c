@@ -67,17 +67,17 @@ void menus(soul_t *ptr, byte code)
 	else if(code == 1)
 	{
 		hpbar(ptr, hp_string, bar_amount);
-		printf("   %c :: [" KRED "%s" RESET "]  %d/%d\trange: %d\t(%s, %s)\n", ptr->type, hp_string, hp_c, hp, ptr->attr.range_c, ptr->name, ptr->desc);
+		printf("   %c :: [" KRED "%s" RESET "]  %d/%d\trange: %d\t(%s, %s)\n", ptr->type, hp_string, hp_c, hp, ptr->stats.range_c, ptr->name, ptr->desc);
 		printf(" #-----------------\\__|  P R E     R O U N D  |__/----------------#\n\n\n");
 	} else if(code == 11)
 	{
 		hpbar(ptr, hp_string, bar_amount);
-		printf("   %c :: ["KRED"%s"RESET"]  %d/%d\trange: %d\t(%s, %s)\n", ptr->type, hp_string, hp_c, hp, ptr->attr.range_c, ptr->name, ptr->desc);
+		printf("   %c :: ["KRED"%s"RESET"]  %d/%d\trange: %d\t(%s, %s)\n", ptr->type, hp_string, hp_c, hp, ptr->stats.range_c, ptr->name, ptr->desc);
 	} else if(code == 2)
 	{
 		printf("\n #_________________/--|  P O S T   R O U N D  |--\\________________#\n");
 		hpbar(ptr, hp_string, bar_amount);
-		printf("   %c :: ["KRED"%s"RESET"]  %d/%d\trange: %d\t(%s, %s)\n", ptr->type, hp_string, hp_c, hp, ptr->attr.range_c, ptr->name, ptr->desc);
+		printf("   %c :: ["KRED"%s"RESET"]  %d/%d\trange: %d\t(%s, %s)\n", ptr->type, hp_string, hp_c, hp, ptr->stats.range_c, ptr->name, ptr->desc);
 	} else if(code == 3)
 	{
 		printf(" #________________/--|  T H I S   R O U N D  |--\\________________#\n");
@@ -112,7 +112,7 @@ void hpbar(soul_t *ptr, char *string, int bar_amount)
 }
 
 
-void bprintf(buff_t *pbuf, char *fmt, ...)
+void bprintf(buffer_t *pbuf, char *fmt, ...)
 {
 	/*  DEPRECIATED TERMPORARILY;
 	 *   Will be used to have a 'Queue' for the battle log. Reminder: Circular Buffer */
@@ -151,12 +151,12 @@ void round_menu(soul_t *ptr)
 
 void stat_print(struct soul * ptr)
 {
-	struct item * item = &ptr->bandaid;
+	item_t *item = &ptr->bandaid;
 	char string[21], pclass[8];
 
 	hpbar(ptr, string, 20);
 
-	switch(ptr->attr.cls)
+	switch(ptr->stats.cls)
 	{
 		case 'a':
 			strncpy(pclass, "Archer", 8);
@@ -183,9 +183,9 @@ void stat_print(struct soul * ptr)
 	printf(" |    *  Bandaids: " BRED "%d\n" RESET, item->amount);
 	printf(" | \n");
 	printf(" +--[   A T T R I B U T E S   ]\n");
-	printf(" |    *  Strength : " KRED "%d" RESET "\tWisdom: " BCYN "%d\n" RESET, ptr->attr.strength, ptr->attr.wisdom);
-	printf(" |    *  Dexterity: " BYEL "%d" RESET "\n", ptr->attr.dexterity);
-        printf(" |    *  Luck     : " BGRN "%d" RESET "\tRange: " KGRN "%d\n" RESET, ptr->luck, ptr->attr.range);
+	printf(" |    *  Strength : " KRED "%d" RESET "\tWisdom: " BCYN "%d\n" RESET, ptr->stats.strength, ptr->stats.wisdom);
+	printf(" |    *  Dexterity: " BYEL "%d" RESET "\n", ptr->stats.dexterity);
+        printf(" |    *  Luck     : " BGRN "%d" RESET "\tRange: " KGRN "%d\n" RESET, ptr->luck, ptr->stats.range);
 	printf(" | \n");
 	printf(" +--[   S T A T U S ]\n");
 	printf(" |    [" KRED "%s" RESET "]\n", string);

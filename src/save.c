@@ -65,19 +65,19 @@ int save(soul_t *ptr)
 		if(PASSWD)
 			fprintf(fd, "password:%lu;\n", ptr->pass);
 		fprintf(fd, "description:%s;\n", ptr->desc);
-		fprintf(fd, "class:%c;\n", ptr->attr.cls);
+		fprintf(fd, "class:%c;\n", ptr->stats.cls);
 		//fprintf(fd, "\n -   S T A T S   - - - - - - - - - - - - - \n");
-		fprintf(fd, "strength:%d;\n", ptr->attr.strength);
-		fprintf(fd, "wisdom:%d;\n", ptr->attr.wisdom);
-		fprintf(fd, "dexterity:%d;\n", ptr->attr.dexterity);
+		fprintf(fd, "strength:%d;\n", ptr->stats.strength);
+		fprintf(fd, "wisdom:%d;\n", ptr->stats.wisdom);
+		fprintf(fd, "dexterity:%d;\n", ptr->stats.dexterity);
 		fprintf(fd, "gold:%.2f;\n", ptr->gold);
 		fprintf(fd, "luck:%d;\n", ptr->luck);
 		fprintf(fd, "type:%c;\n", ptr->type);
-		fprintf(fd, "range:%d;\n", ptr->attr.range);
+		fprintf(fd, "range:%d;\n", ptr->stats.range);
 		//fprintf(fd, "\n -   L O C K S   - - - - - - - - - - - - - \n");
-		fprintf(fd, "primary_lock:%d;\n", ptr->attr.p_lck);
-		fprintf(fd, "secondary_lock:%d;\n", ptr->attr.s_lck);
-		fprintf(fd, "tertiary_lock:%d;\n", ptr->attr.t_lck);
+		fprintf(fd, "primary_lock:%d;\n", ptr->stats.p_lck);
+		fprintf(fd, "secondary_lock:%d;\n", ptr->stats.s_lck);
+		fprintf(fd, "tertiary_lock:%d;\n", ptr->stats.t_lck);
 		//fprintf(fd, "\n -   I T E M S   - - - - - - - - - - - - - \n");
 		fprintf(fd, "bandaids:%d;\n", ptr->bandaid.amount);
 
@@ -171,16 +171,16 @@ int load_profile(soul_t *ptr)
 
 				} else if(!strncmp(tokk, "class", 5)) {
 					tptr = strtok(NULL, ":;");
-					ptr->attr.cls = tptr[0];
+					ptr->stats.cls = tptr[0];
 
 				} else if(!strncmp(tokk, "strength", 8)) {
-					ptr->attr.strength = load_d(0);
+					ptr->stats.strength = load_d(0);
 
 				} else if(!strncmp(tokk, "wisdom", 6)) {
-					ptr->attr.wisdom = load_d(0);
+					ptr->stats.wisdom = load_d(0);
 
 				} else if(!strncmp(tokk, "dexterity", 9)) {
-					ptr->attr.dexterity = load_d(0);
+					ptr->stats.dexterity = load_d(0);
 
 				} else if(!strncmp(tokk, "gold", 4)) {
 					ptr->gold = load_d(1);
@@ -193,16 +193,16 @@ int load_profile(soul_t *ptr)
 					ptr->type = tptr[0];
 
 				} else if(!strncmp(tokk, "range", 5)) {
-					ptr->attr.range = load_d(0);
+					ptr->stats.range = load_d(0);
 
 				} else if(!strncmp(tokk, "primary_lock", 12)) {
-					ptr->attr.p_lck = load_d(0);
+					ptr->stats.p_lck = load_d(0);
 
 				} else if(!strncmp(tokk, "secondary_lock", 14)) {
-					ptr->attr.s_lck = load_d(0);
+					ptr->stats.s_lck = load_d(0);
 
 				} else if(!strncmp(tokk, "tertiary_lock", 13)) {
-					ptr->attr.t_lck = load_d(0);
+					ptr->stats.t_lck = load_d(0);
 
 				} else if(!strncmp(tokk, "bandaids", 8)) {
 					ptr->bandaid.amount = load_d(0);
@@ -218,17 +218,17 @@ int load_profile(soul_t *ptr)
 		/* Debugging the loading  */
 		printf("\n   Name: %s\n", ptr->name);
 		printf("   Description: %s\n", ptr->desc);
-		printf("   Class: %c\n", ptr->attr.cls);
-		printf("   Strength: %d\tWisdom: %d\tDexterity: %d\n", ptr->attr.strength, ptr->attr.wisdom, ptr->attr.dexterity);
+		printf("   Class: %c\n", ptr->stats.cls);
+		printf("   Strength: %d\tWisdom: %d\tDexterity: %d\n", ptr->stats.strength, ptr->stats.wisdom, ptr->stats.dexterity);
 		printf("   Gold: %.f\tLuck: %d\n", ptr->gold, ptr->luck);
-		printf("   Type: %c\tRange: %d\n", ptr->type, ptr->attr.range);
-		printf("   Primary Lock: %d\tSecondary Lock: %d\n", ptr->attr.p_lck, ptr->attr.s_lck);
-		printf("   Tertiary Lock: %d\n", ptr->attr.t_lck);
+		printf("   Type: %c\tRange: %d\n", ptr->type, ptr->stats.range);
+		printf("   Primary Lock: %d\tSecondary Lock: %d\n", ptr->stats.p_lck, ptr->stats.s_lck);
+		printf("   Tertiary Lock: %d\n", ptr->stats.t_lck);
 
 		tools("pause", NULL);
 		/*  */
 
-		ptr->hp = ((ptr->attr.strength * 3) + 50);
+		ptr->hp = ((ptr->stats.strength * 3) + 50);
 		ptr->hp_c = ptr->hp;
 		ptr->speed = (rand() % (sizeof(byte) - 10));
 

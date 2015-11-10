@@ -59,15 +59,15 @@ int round_start(soul_t *player, soul_t *npc)
 
 	n = -1;	// n is returned at the completion of this function.
 
-	player->attr.range_c = player->attr.range; 	// Start of round to set current range
-	npc->attr.range_c = npc->attr.range;		//  to the max range of the mob/person.
+	player->stats.range_c = player->stats.range; 	// Start of round to set current range
+	npc->stats.range_c = npc->stats.range;		//  to the max range of the mob/person.
 	
 	tools("clear", NULL);
 	//printf("Player hp: %d, Monster: %d\n", player->hp_c, npc->hp_c);
 
 	while(player->hp_c != 0 && npc->hp_c != 0)
 	{
-		player->hp = ((player->attr.strength * 3) + 50);
+		player->hp = ((player->stats.strength * 3) + 50);
 		menus(player, 11);	// 11 for *new* menu.
 		menus(npc, 1);		// 33 for *new* menu.
 
@@ -164,12 +164,12 @@ int damage_calc(soul_t *ptr)
 {
 	int n, o_mod;		// n is the retuned value. o_mod is used to randomize dmg more.
 	char c; 		// c (class) is used to get the proper damage function.
-	double wis, dex, str;	// Holds the attributes of the ptr being passed.
+	double wis, dex, str;	// Holds the statsibutes of the ptr being passed.
 	
-	c   = ptr->attr.cls;		// Class
-	wis = ptr->attr.wisdom;		// Wisdom
-	dex = ptr->attr.dexterity;	// Dexterity
-	str = ptr->attr.strength;	// Strength
+	c   = ptr->stats.cls;		// Class
+	wis = ptr->stats.wisdom;		// Wisdom
+	dex = ptr->stats.dexterity;	// Dexterity
+	str = ptr->stats.strength;	// Strength
 	o_mod = 5;			// Modulus for damage.
 
 	switch(c)
@@ -203,10 +203,10 @@ int range_count(soul_t *a_, soul_t *d_)
 {
 	int n, ar, dr, ar_c, dr_c, t;
 
-	ar   = a_->attr.range;		// Attackers range (max)
-	dr   = d_->attr.range;		// Defenders range (max)
-	ar_c = a_->attr.range_c;	// Attackers range (current)
-	dr_c = d_->attr.range_c;	// Defenders range (currecnt)
+	ar   = a_->stats.range;		// Attackers range (max)
+	dr   = d_->stats.range;		// Defenders range (max)
+	ar_c = a_->stats.range_c;	// Attackers range (current)
+	dr_c = d_->stats.range_c;	// Defenders range (currecnt)
 
 	t= ar + dr;		// Tiles away. (0 + 0) means in melee range.
 	n = -1;			// Set return value to error.
@@ -233,8 +233,8 @@ int range_count(soul_t *a_, soul_t *d_)
 		n = 0;	// Both in range.
 	}
 
-	a_->attr.range_c = ar_c;	// Refresh the values back
-	d_->attr.range_c = dr_c;	//  to the structures.
+	a_->stats.range_c = ar_c;	// Refresh the values back
+	d_->stats.range_c = dr_c;	//  to the structures.
 	
 
 	return n;
@@ -297,11 +297,11 @@ int defense_calc(soul_t *ptr)
 	int n, mod;
 	int wis, dex, str;
 
-	wis = ptr->attr.wisdom;
-	dex = ptr->attr.dexterity;
-	str = ptr->attr.strength;
+	wis = ptr->stats.wisdom;
+	dex = ptr->stats.dexterity;
+	str = ptr->stats.strength;
 
-	switch(ptr->attr.cls)
+	switch(ptr->stats.cls)
 	{
 		case 'a':
 			mod = 3;
@@ -330,7 +330,7 @@ int defense_calc(soul_t *ptr)
 
 int stat_check(soul_t *ptr, int special)
 {
-	struct _attr_t *s = &ptr->attr;
+	struct stats *s = &ptr->stats;
 
 	int stat_total, stat_chance, num;
 
@@ -379,29 +379,29 @@ void stat_gain(soul_t *ptr)
 	byte primary, secondary, tertiary;
 	char *pri_name, *sec_name, *ter_name;
 
-	switch(ptr->attr.cls)
+	switch(ptr->stats.cls)
 	{
 		case 'm':
-			primary   = ptr->attr.wisdom;
-			secondary = ptr->attr.dexterity;
-			tertiary  = ptr->attr.strength;
+			primary   = ptr->stats.wisdom;
+			secondary = ptr->stats.dexterity;
+			tertiary  = ptr->stats.strength;
 			pri_name  = "Wisdom";
 			sec_name  = "Dexterity";
 			ter_name  = "Strength";
 			break;
 		case 'a':
-			primary   = ptr->attr.dexterity;
-			secondary = ptr->attr.strength;
-			tertiary  = ptr->attr.wisdom;
+			primary   = ptr->stats.dexterity;
+			secondary = ptr->stats.strength;
+			tertiary  = ptr->stats.wisdom;
 			pri_name  = "Dexterity";
 			sec_name  = "Strength";
 			ter_name  = "Wisdom";
 			break;
 
 		case 'w':
-			primary   = ptr->attr.strength;
-			secondary = ptr->attr.dexterity;
-			tertiary  = ptr->attr.wisdom;
+			primary   = ptr->stats.strength;
+			secondary = ptr->stats.dexterity;
+			tertiary  = ptr->stats.wisdom;
 			pri_name  = "Strength";
 			sec_name  = "Dexterity";
 			ter_name  = "Wisdom";
@@ -412,48 +412,48 @@ void stat_gain(soul_t *ptr)
 			tools("pause", NULL);
 	}
 
-	if(!ptr->attr.p_lck)
+	if(!ptr->stats.p_lck)
 	{
 		printf("\t[" BYEL "+" RESET "]  " BYEL "%s" RESET " [%d] has increased to ", pri_name, primary);
 		primary++;
 		printf("%d.\n", primary);
 
-		if(ptr->attr.cls == 'm')
-			ptr->attr.wisdom = primary;
-		else if(ptr->attr.cls == 'a')
-			ptr->attr.dexterity = primary;
-		else if(ptr->attr.cls == 'w')
-			ptr->attr.strength = primary;
+		if(ptr->stats.cls == 'm')
+			ptr->stats.wisdom = primary;
+		else if(ptr->stats.cls == 'a')
+			ptr->stats.dexterity = primary;
+		else if(ptr->stats.cls == 'w')
+			ptr->stats.strength = primary;
 		else
 			printf("An error occured in [stat_gain]!\n");
 
-	} else if(!ptr->attr.s_lck)
+	} else if(!ptr->stats.s_lck)
 	{
 		printf("\t[" BYEL "+" RESET "]  " BYEL "%s" RESET " [%d] has increased to ", sec_name, secondary);
 		secondary++;
 		printf("%d.\n", secondary);
 
-		if(ptr->attr.cls == 'm')
-			ptr->attr.dexterity = secondary;
-		else if(ptr->attr.cls == 'a')
-			ptr->attr.strength = secondary;
-		else if(ptr->attr.cls == 'w')
-			ptr->attr.dexterity = secondary;
+		if(ptr->stats.cls == 'm')
+			ptr->stats.dexterity = secondary;
+		else if(ptr->stats.cls == 'a')
+			ptr->stats.strength = secondary;
+		else if(ptr->stats.cls == 'w')
+			ptr->stats.dexterity = secondary;
 		else
 			printf("An error occured in [stat_gain]!\n");
 
-	} else if(!ptr->attr.t_lck)
+	} else if(!ptr->stats.t_lck)
 	{
 		printf("\t[" BYEL "+" RESET "]  " BYEL "%s" RESET " [%d] has increased to ", ter_name, tertiary);
 		tertiary++;
 		printf("%d.\n", tertiary);
 
-		if(ptr->attr.cls == 'm')
-			ptr->attr.strength = tertiary;
-		else if(ptr->attr.cls == 'a')
-			ptr->attr.wisdom = tertiary;
-		else if(ptr->attr.cls == 'w')
-			ptr->attr.wisdom = tertiary;
+		if(ptr->stats.cls == 'm')
+			ptr->stats.strength = tertiary;
+		else if(ptr->stats.cls == 'a')
+			ptr->stats.wisdom = tertiary;
+		else if(ptr->stats.cls == 'w')
+			ptr->stats.wisdom = tertiary;
 		else
 			printf("An error occured in [stat_gain]!\n");
 

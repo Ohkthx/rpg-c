@@ -42,9 +42,9 @@ void item_use(soul_t *ptr, char *name)
 				oh = 0;
 
 			if(stat_check(ptr, 1)) {
-				printf("   [" BRED "+" RESET "]  Strength increased from %d to ", ptr->attr.strength);
-				ptr->attr.strength += 1;
-				printf("%d.\n", ptr->attr.strength);
+				printf("   [" BRED "+" RESET "]  Strength increased from %d to ", ptr->stats.strength);
+				ptr->stats.strength += 1;
+				printf("%d.\n", ptr->stats.strength);
 			}
 
 			item->amount -= amount;

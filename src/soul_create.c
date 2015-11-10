@@ -90,14 +90,14 @@ int class_create(soul_t *p, char p_class, int lvl)
 		switch(opt)
 		{
 			case 'a':	// Archer
-				p->attr.dexterity = 13 * lvl;
-				p->attr.wisdom = 6 * lvl;
-				p->attr.strength = 6 * lvl;
-				p->attr.range = 2;
-				p->attr.cls = 'a';	// Class = Archer
-				p->attr.p = 'd';	// Primary stat (dexterity)
-				p->attr.s = 's';	// Secondary stat (strength)
-				p->attr.t = 'w';	// Tertiary stat (wisdom)
+				p->stats.dexterity = 13 * lvl;
+				p->stats.wisdom = 6 * lvl;
+				p->stats.strength = 6 * lvl;
+				p->stats.range = 2;
+				p->stats.cls = 'a';	// Class = Archer
+				p->stats.p = 'd';	// Primary stat (dexterity)
+				p->stats.s = 's';	// Secondary stat (strength)
+				p->stats.t = 'w';	// Tertiary stat (wisdom)
 
 				//p->attr.pri = &p->attr.dexterity;
 				//p->attr.sec = &p->attr.strength;	// Used for stat_gain
@@ -110,14 +110,14 @@ int class_create(soul_t *p, char p_class, int lvl)
 				break;
 
 			case 'm':	// Mage
-				p->attr.dexterity = 5 * lvl;
-				p->attr.wisdom = 13 * lvl;
-				p->attr.strength = 7 * lvl;
-				p->attr.range = 1;
-				p->attr.cls = 'm';	// Class = Mage
-				p->attr.p = 'w';	// Primary stat (wisdom)
-				p->attr.s = 'd';	// Secondary stat (dexterity)
-				p->attr.t = 's';	// Tertiary stat (strength)
+				p->stats.dexterity = 5 * lvl;
+				p->stats.wisdom = 13 * lvl;
+				p->stats.strength = 7 * lvl;
+				p->stats.range = 1;
+				p->stats.cls = 'm';	// Class = Mage
+				p->stats.p = 'w';	// Primary stat (wisdom)
+				p->stats.s = 'd';	// Secondary stat (dexterity)
+				p->stats.t = 's';	// Tertiary stat (strength)
 
 				//p->attr.pri = &p->attr.wisdom;
 				//p->attr.sec = &p->attr.dexterity;	// Used for stat_gain
@@ -130,14 +130,14 @@ int class_create(soul_t *p, char p_class, int lvl)
 				break;
 
 			case 'w':	// Warrior
-				p->attr.dexterity = 7 * lvl;
-				p->attr.wisdom = 3 * lvl;
-				p->attr.strength = 15 * lvl;
-				p->attr.range = 0;
-				p->attr.cls = 'w';	// Class = Warrior
-				p->attr.p = 's';	// Primary stat (strength)
-				p->attr.s = 'd';	// Secondary stat (dexterity)
-				p->attr.t = 'w';	// Tertiary stat (wisdom)
+				p->stats.dexterity = 7 * lvl;
+				p->stats.wisdom = 3 * lvl;
+				p->stats.strength = 15 * lvl;
+				p->stats.range = 0;
+				p->stats.cls = 'w';	// Class = Warrior
+				p->stats.p = 's';	// Primary stat (strength)
+				p->stats.s = 'd';	// Secondary stat (dexterity)
+				p->stats.t = 'w';	// Tertiary stat (wisdom)
 
 				//p->attr.pri = &p->attr.strength;
 				//p->attr.sec = &p->attr.dexterity;	// Used for stat_gain
@@ -155,11 +155,11 @@ int class_create(soul_t *p, char p_class, int lvl)
 				break;
 		}
 
-		p->hp = ((p->attr.strength * 3) + 50);
+		p->hp = ((p->stats.strength * 3) + 50);
 		p->hp_c = p->hp;
-		p->attr.p_lck = 0;	// Set primary skill unlocked (allows stat gain.)
-		p->attr.s_lck = 0;	// Set secondary skill unlocked.
-		p->attr.t_lck = 0;	// Set tertiary skill unlocked.
+		p->stats.p_lck = 0;	// Set primary skill unlocked (allows stat gain.)
+		p->stats.s_lck = 0;	// Set secondary skill unlocked.
+		p->stats.t_lck = 0;	// Set tertiary skill unlocked.
 	}
 	
 	tools("clear", NULL);

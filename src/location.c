@@ -144,7 +144,7 @@ void stage(struct node *head, struct soul *ptr)
 		char hp_string[10 + 1];		// String that will contain health bar (10 + \0)
 		hpbar(ptr, hp_string, 10);	// Create the hp bar.
 		
-		ptr->hp = ((ptr->attr.strength * 3) + 50);
+		ptr->hp = ((ptr->stats.strength * 3) + 50);
 	
 		tools("clear", NULL);	// Sends the ANSI Clear.
 		printf(" [  %s ]\n [ %d ] %s  \n\n", c->name, c->id, c->d);	// Location Data.
