@@ -17,14 +17,21 @@ Compiled using make in the the same directory as this README file.
 	bak/		: Store backups for headers and c source files.
 	dev_test/	: A temporary directory for testing ideas.
 	save/		: Stores player information.
+	data/		: Holds the game data (items, world info, etc)
 
 ;- Start of Change Log.
 Change Log:
 	09, NOV:
+		+ New directory to hold game data. Moved ecosphere and item db to data/
+		+ Items are now in a container called objs. This will allow for new items to be
+		   added much easier.
+		+ Skills are now in a container called bucket.
+		+ New descriptions and room names to ecosphere.in (was .ru.)
 		+ Skills added (not functional.) *Need to add skill_gain to skills.c.
 		+ Fixed a health mis-match on loading a profile. Also changed the name of the
 		   load function to load_profile function. (making way for a load_config)
 	08, NOV:
+		+ Moved project to GitHub.
 		+ Added possible stat gain of strength on bandages. Changed the hp formula
 		   of how much strength influences hp.
 		   + Small issue resolved where hp wasn't being updated in stage() and

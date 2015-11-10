@@ -8,7 +8,6 @@ typedef struct item
 {
 	char name[16];
         int amount;	int stock;
-        int heal;
         float cost;
 
 } item_t; 
@@ -26,7 +25,7 @@ typedef struct soul
 	unsigned long pass;
         int hp;         int hp_c;
         int dmg;        int def;
-	int o_mod;	int d_mod;
+	int o_mod;	int d_mod;	// Both unused.
         float gold;
         byte luck;      byte speed;
         byte type;
@@ -34,8 +33,8 @@ typedef struct soul
  	stats_t     stats;	// Player's stats
 	item_t      *item;	// "Current" item.
 	skill_t     *skill;	// Link to primary skill.
-	container_t bucket;	// Holds the skills.
 	objects_t   objs;	// Holds items.
+	container_t bucket;	// Holds the skills.
 
 } soul_t; 
 
