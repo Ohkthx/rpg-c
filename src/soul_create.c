@@ -44,7 +44,7 @@ int soul_create(soul_t *creature, char *name, char *desc, char p_class, int lvl)
 					creature->name, creature->desc, creature->hp, creature->dmg, creature->speed);
 			printf(" Primary Skill:\n   %s, %.1f \n", creature->skill->name, creature->skill->val);
 
-			item_init(&creature->bandaid, "bandaids",  10);
+			item_init(&creature->objs.bandaid, "bandaids",  10);
 
 			save(creature);
 			getchar();

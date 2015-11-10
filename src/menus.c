@@ -131,9 +131,10 @@ void bprintf(buffer_t *pbuf, char *fmt, ...)
 void round_menu(soul_t *ptr)
 {
 	char ch;
+	ptr->item = &ptr->objs.bandaid;
 
 	//fputs("\0337", stdout);	
-	printf("\n  s) Save Information.\n  h) Bandage [%d]\n  q) Quit (menu)\n\n Option: ", ptr->bandaid.amount);
+	printf("\n  s) Save Information.\n  h) Bandage [%d]\n  q) Quit (menu)\n\n Option: ", ptr->item->amount);
 	//fputs("\0337", stdout);
 	ch = getchar(); // Required to eat '\n' for next statement.
 
@@ -151,7 +152,7 @@ void round_menu(soul_t *ptr)
 
 void stat_print(struct soul * ptr)
 {
-	item_t *item = &ptr->bandaid;
+	ptr->item = &ptr->objs.bandaid;
 	char string[21], pclass[8];
 
 	hpbar(ptr, string, 20);
@@ -180,7 +181,7 @@ void stat_print(struct soul * ptr)
 	printf(" | \n");
 	printf(" +--[   I T E M S   ]\n");
 	printf(" |    *  Gold    : " BYEL "%.2f\n" RESET, ptr->gold);
-	printf(" |    *  Bandaids: " BRED "%d\n" RESET, item->amount);
+	printf(" |    *  Bandaids: " BRED "%d\n" RESET, ptr->item->amount);
 	printf(" | \n");
 	printf(" +--[   A T T R I B U T E S   ]\n");
 	printf(" |    *  Strength : " KRED "%d" RESET "\tWisdom: " BCYN "%d\n" RESET, ptr->stats.strength, ptr->stats.wisdom);

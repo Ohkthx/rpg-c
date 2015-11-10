@@ -136,7 +136,7 @@ void world_grab(struct node *head)
 void stage(struct node *head, struct soul *ptr)
 {
 	struct node *c = head;	// Hold original
-	//struct item *i = &ptr->bandaid;
+	ptr->item = &ptr->objs.bandaid;
 
 	while(1) 
 	{
@@ -154,7 +154,7 @@ void stage(struct node *head, struct soul *ptr)
 		printf(" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n\n");
 	
 		printf("  I) Individual\t\tS) Save\n");			// i = profile, s = save
-		printf("  C) Combat\t\tH) Bandage [%d] \n", ptr->bandaid.amount);	// c = combat, h = heal
+		printf("  C) Combat\t\tH) Bandage [%d] \n", ptr->item->amount);	// c = combat, h = heal
 		printf("  Q) Quit\t\t");				// q = quit.
 
 		if(c->id == 0)

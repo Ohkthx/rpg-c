@@ -1,15 +1,23 @@
 dungeon:name:8;
 dungeon:name:Hallway;
 dungeon:name:Long Corridor;
-dungeon:name:Dark Room;
-dungeon:name:Open Room;
+dungeon:name:A Dark Sanctum;
+dungeon:name:Spacious Area;
 dungeon:name:Damp Room;
 dungeon:name:Tattered Lair;
 dungeon:name:Secret Area;
 dungeon:name:Dungeon Exit;
 
-dungeon:description:4;
+dungeon:description:12;
 dungeon:description:A dark damp area.;
 dungeon:description:A spook realm of things.;
-dungeon:description:You are getting an eeriy feeling;
-dungeon:description:Yolo;
+dungeon:description:You are getting an eeriy feeling.;
+dungeon:description:This location has a dank smell to it.;
+dungeon:description:You feel incredibly uncomfortable here.;
+dungeon:description:You hear noises in the distance;
+dungeon:description:You think to yourself, "What was that sound?";
+dungeon:description:The room is swept with a quick wind of bone chill.;
+dungeon:description:You hear a gurgling noise.;
+dungeon:description:An unnerving feeling of sickness is in your stomach.;
+dungeon:description:You feel lost...;
+dungeon:description:A foul stench overcomes you.;

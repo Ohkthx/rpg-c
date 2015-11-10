@@ -1,11 +1,10 @@
 #ifndef ORGA_CREATE_INCLUDED
 #define ORGA_CREATE_INCLUDED
 
-
 #include "skills.h"
 
 
-typedef struct _item_t   
+typedef struct item   
 {
 	char name[16];
         int amount;	int stock;
@@ -13,6 +12,12 @@ typedef struct _item_t
         float cost;
 
 } item_t; 
+
+typedef struct objects
+{
+	struct item bandaid;
+
+} objects_t;
 
 
 typedef struct soul 
@@ -26,10 +31,11 @@ typedef struct soul
         byte luck;      byte speed;
         byte type;
 
- 	stats_t stats;
-	item_t bandaid;
-	skill_t *skill;		// Link to primary skill.
+ 	stats_t     stats;	// Player's stats
+	item_t      *item;	// "Current" item.
+	skill_t     *skill;	// Link to primary skill.
 	container_t bucket;	// Holds the skills.
+	objects_t   objs;	// Holds items.
 
 } soul_t; 
 
