@@ -28,10 +28,7 @@ int combat(soul_t *ptr)
 		struct soul *mPtr = malloc(sizeof(soul_t));
 		soul_create(mPtr, "Training Dummy", "WAF", ch, n);
 	
-		if(round_start(ptr, mPtr))	// Start combat.
-			round_post(ptr, mPtr, 0); // 0 returned from round_start. (player lived)
-		else 
-			round_post(ptr, mPtr, 1); // 1 returned from round_start. DEATH OF PLAYER
+		round_start(ptr, mPtr);	// Start combat.
 	
 		free(mPtr);
 	} else { 
@@ -44,7 +41,7 @@ int combat(soul_t *ptr)
 }
 
 
-int round_start(soul_t *player, soul_t *npc)
+void round_start(soul_t *player, soul_t *npc)
 {
 	soul_t *a_, *d_;	//a_ = attacker, d_ = defender
 	byte n;	// byte n is what will be returned to the function that calls on this.
@@ -148,7 +145,8 @@ int round_start(soul_t *player, soul_t *npc)
 
 	tools("pause", NULL);
 
-	return n;
+	round_post(player, npc, n);
+
 }
 
 
@@ -156,7 +154,7 @@ void round_post(soul_t *player, soul_t *npc, byte result)
 {
 	tools("clear", NULL);
 	
-	if(result == 0)		// Survived the round, calc gold etc.
+	if(result == 1)		// Survived the round, calc gold etc.
 	{
 		printf(" NPC Gold: " BYEL "%.2f\n" RESET, npc->gold);
 		printf(" Player Gold: " BYEL "%.2f\n" RESET, player->gold);
@@ -166,7 +164,7 @@ void round_post(soul_t *player, soul_t *npc, byte result)
 		printf(" New player gold: " BYEL "%.2f\n" RESET, player->gold);
 
 
-	} else if(result == 1) {		// Player death.
+	} else if(result == 0) {		// Player death.
 		player->hp_c = player->hp;	// Prepare next round by maxing player HP again.
 		printf(" You have died. Resetting health this time... \n");
 

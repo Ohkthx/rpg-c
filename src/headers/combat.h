@@ -6,7 +6,7 @@
 #include "skills.h"	// struct with skills.
 
 int  combat(soul_t *ptr);
-int  round_start(soul_t *player, soul_t *npc);
+void  round_start(soul_t *player, soul_t *npc);
 int  damage_calc(soul_t *ptr);
 int  defense_calc(soul_t *ptr);
 int  range_count(soul_t *a_, soul_t *d_);

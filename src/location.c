@@ -137,13 +137,47 @@ void stage(struct node *head, struct soul *ptr)
 	struct node *c = head;	// Hold original
 	ptr->item = &ptr->objs.bandaid;
 
+	int id_hold = c-> id;
+
 	while(1) 
 	{
+		if(((rand() % 100) < 30) && (id_hold != c->id) && (c->id != 0))	// 3 in 10 chance
+		{	
+			char type;			// Will pass the mob type.
+			int lvl, tp;			// Passes mobs level, *should implement scaling 
+							//  tp is the numeric value of type.
+			lvl = (rand() % 2) + 1;		// Between 1 - 2.
+			tp = (rand() % 3);
+			switch(tp)
+			{
+				case (0):
+					type = 'a';	// Archer
+					break;
+				case (1):
+					type = 'm';	// Mage
+					break;
+				case (2):
+					type = 'w';	// Warrior
+					break;
+			}
+
+			tools("clear", NULL);
+			struct soul *npc = malloc(sizeof(soul_t));		// Allocate storage
+			soul_create(npc, "Training Dummy", "WAF", type, lvl);	// Create monster.
+			printf("   You have been approached by a \n   > [ %s, %s ]\n    while traveling!\n", npc->name, npc->desc);
+			tools("pause", NULL);
+			round_start(ptr, npc);					// Start the round.
+			free(npc);						// Free up the allocated storage.
+		}
+
 		char ch;		// Used by getchar in passed to switch-case.
 		char hp_string[10 + 1];		// String that will contain health bar (10 + \0)
 		hpbar(ptr, hp_string, 10);	// Create the hp bar.
 		
 		ptr->hp = ((ptr->stats.strength * 3) + 50);
+
+		if(id_hold != c->id)
+			id_hold = c->id;
 	
 		tools("clear", NULL);	// Sends the ANSI Clear.
 		printf(" ---|  %s |---\n ---| %s |---  \n\n", c->name, c->d);	// Location Data.
@@ -212,14 +246,16 @@ void stage(struct node *head, struct soul *ptr)
 				c = c->next;		// Go to next link in list.
 				location_create(c, NULL, NULL);	// Append a new location.
 				break;
-			case 'x':
-				item_store(&ptr->objs, &ptr->gold);
-				break;
 			case 'l':
 				if(c->prev != NULL) {	// Block 'p' (causes seg_fault) due to going to
 					c = c->prev;	//  a null location.
 					break;
-				}			// Otherwise it will fall-thru to the default.
+				}		// Otherwise it will fall-thru to the default.
+			case 'x':
+				if(c->id == 0) {
+					item_store(&ptr->objs, &ptr->gold);
+					break;
+				}
 			default:
 				printf(" Bad Option!\n");
 				tools("pause", NULL);

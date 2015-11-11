@@ -151,7 +151,7 @@ void item_store(objects_t *items, float *gold)
 	{
 
 		tools("clear", NULL);
-		printf("  Welcome to the Store!    --| %.2f Gold |--\n", *gold);
+		printf("  Welcome to the Store!    --|" BYEL " %.2f " RESET "Gold |--\n", *gold);
 		printf("    This is place to restock your consumables or possibly\n");	
 		printf("    armor or weapons in the future. It may even contain the \n");
 		printf("    the ability to purchase skills up to 35.0 \n");
