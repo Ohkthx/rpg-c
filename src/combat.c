@@ -166,9 +166,11 @@ void round_post(soul_t *player, soul_t *npc, byte result)
 		printf(" New player gold: " BYEL "%.2f\n" RESET, player->gold);
 
 
-	} else if(result == 1)	// Player death.
+	} else if(result == 1) {		// Player death.
 		player->hp_c = player->hp;	// Prepare next round by maxing player HP again.
-	else
+		printf(" You have died. Resetting health this time... \n");
+
+	} else
 		printf("\nWTF ERROR OCCURED!\n");	// Back to that w = -1 unhandled error.
 
 	tools("pause", NULL);
