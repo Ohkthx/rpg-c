@@ -8,7 +8,8 @@ git clone https://github.com/0x1p2/rpg-c
 cd rpg-c/
 make
 ./rpg-c
-
+```
+```bash
 #TAR installation.
 tar zvxf 0x1p2-rpg-c*.tar.gz
 cd 0x1p2-rpg*/
@@ -26,6 +27,8 @@ It's heavily influenced by Ultima Online. The **Stats**, **Skills**, and **Items
 + Linux Compatible (Windows support planned)
 + Locations to be explored!
 + Stat Gain
++ Item Purchase
++ Consumables
 
 #### Extra Features:
 |Items|Skills|Stats|
@@ -50,7 +53,7 @@ It's heavily influenced by Ultima Online. The **Stats**, **Skills**, and **Items
   + Stamina Bar
   + Mana Bar
 + More items
-  + Arrows
-  + Reagents (Magery)
   + Potions
+  + Weapons
+  + Armor
    

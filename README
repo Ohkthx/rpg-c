@@ -21,6 +21,8 @@ Compiled using make in the the same directory as this README file.
 
 ;- Start of Change Log.
 Change Log:
+	11, NOV:
+		+ Added a store to purchase consumables (arrows, bandages, and reagents.)
 	10, NOV:
 		+ Item consumption added. Archers use arrows, Mages use Reagents. Adding a store
 		   to purchase more of each (and future items.) Consumption saves with profile.

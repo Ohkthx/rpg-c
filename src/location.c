@@ -146,11 +146,11 @@ void stage(struct node *head, struct soul *ptr)
 		ptr->hp = ((ptr->stats.strength * 3) + 50);
 	
 		tools("clear", NULL);	// Sends the ANSI Clear.
-		printf(" [  %s ]\n [ %d ] %s  \n\n", c->name, c->id, c->d);	// Location Data.
-		printf("  [ %s, %s ] \n", ptr->name, ptr->desc);	// Name & Description
-		printf("    Health: [" KRED "%s" RESET "]   %d/%d \n\n", hp_string, ptr->hp_c, ptr->hp);
+		printf(" ---|  %s |---\n ---| %s |---  \n\n", c->name, c->d);	// Location Data.
+		printf(" -| %s, %s |- \n", ptr->name, ptr->desc);	// Name & Description
+		printf(" -| Health: [" KRED "%s" RESET "]   %d/%d \n\n", hp_string, ptr->hp_c, ptr->hp);
 	
-		printf(" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n\n");
+		printf("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n\n");
 	
 		printf("  I) Individual\t\tS) Save\n");			// i = profile, s = save
 		printf("  C) Combat\t\tH) Bandage [%d] \n", ptr->item->amount);	// c = combat, h = heal
@@ -160,14 +160,23 @@ void stage(struct node *head, struct soul *ptr)
 			printf("R) Changelog\n");
 		else
 			printf("\n");
+
+		printf("\n - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n");
+
+		if(c->id == 0)
+			printf("  X) Store\t\t");
+		else if(c->prev != NULL)
+			printf("  L) Last: [%s]\t", c->prev->name);
 	
 		if(c->next != NULL)					// List next location.
-			printf("  N) Next: [%s]\t", c->next->name);
+			printf("N) Next: [%s]\n", c->next->name);
 	
-		if(c->prev != NULL)					// If away from main menu,
-			printf("L) Last: [%s]", c->prev->name);	//  list the previous place.
-	
-		printf("\n\n - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n");
+		//if(c->prev != NULL)					// If away from main menu,
+		//	printf("L) Last: [%s]\n", c->prev->name);	//  list the previous place.
+		//else
+		//	printf("\n");
+
+		printf(" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n");
 	
 		printf("\n Option: ");
 	
@@ -202,6 +211,9 @@ void stage(struct node *head, struct soul *ptr)
 			case 'n':
 				c = c->next;		// Go to next link in list.
 				location_create(c, NULL, NULL);	// Append a new location.
+				break;
+			case 'x':
+				item_store(&ptr->objs, &ptr->gold);
 				break;
 			case 'l':
 				if(c->prev != NULL) {	// Block 'p' (causes seg_fault) due to going to

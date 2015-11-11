@@ -1,11 +1,13 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 #include "headers/soul_create.h"
 #include "headers/items.h"
 #include "headers/menus.h"
 #include "headers/combat.h"
+
 
 void item_load(objects_t *objs)
 {
@@ -138,3 +140,82 @@ int item_consume(soul_t *ptr)
 }
 
 
+void item_store(objects_t *items, float *gold)
+{
+	struct item *i;
+	char ch;
+	int n = 1;
+	
+	while(n)
+	{
+
+		tools("clear", NULL);
+		printf("  Welcome to the Store!    --| %.2f Gold |--\n", *gold);
+		printf("    This is place to restock your consumables or possibly\n");	
+		printf("    armor or weapons in the future. It may even contain the \n");
+		printf("    the ability to purchase skills up to 35.0 \n");
+		printf("\n - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n\n");
+		printf("   B) Bandage(s) [%.2f]\tA) Arrow(s) [%.2f]\n", items->bandaid.cost, items->arrow.cost);
+		printf("   R) Reagent(s) [%.2f]   \tQ) Leave Store\n", items->reagent.cost);
+		printf("\n - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n\n");
+		printf("Option: ");
+		ch = getchar();
+		getchar();
+		ch = tolower(ch);
+
+		switch(ch)
+		{
+			case 'b':
+				i = &items->bandaid;
+				item_buy(i, gold);
+				break;
+			case 'a':
+				i = &items->arrow;
+				item_buy(i, gold);
+				break;
+			case 'r':
+				i = &items->reagent;
+				item_buy(i, gold);
+				break;
+			case 'q':
+				n = 0;
+				break;
+			default:
+				printf("\n  Invalid option.\n");
+				tools("pause", NULL);
+		}
+	}
+
+}
+
+
+void item_buy(item_t *item, float *gold)
+{
+	long   amt;
+	float cost;
+	char  ch, amnt[16], *tmp;
+
+	printf("\n  Amount to buy of %s: ", item->name);
+	fgets(amnt, 16, stdin);
+	amt = strtol(amnt, &tmp, 10);
+
+	printf("   Amt: %ld, cost: %.2f \n", amt, item->cost * amt);
+	cost = amt * item->cost;
+	if(cost > *gold)
+		printf("\n  %.2f is greater than you can afford: %.2f \n", cost, *gold);
+	else {
+		printf("\n  Total cost: %.2f for %ld %s(s), okay? [y/n]: ", cost, amt, item->name);
+		ch = getchar();
+		getchar();
+		ch = tolower(ch);
+
+		if(ch == 'y')
+		{
+			*gold -= cost;
+			item->amount += amt;
+			printf("   %ld  %s(s) purchased. %.2f remaining. \n", amt, item->name, *gold);	
+		}
+	}
+
+	tools("pause", NULL);
+}
