@@ -10,7 +10,7 @@ make
 ./rpg-c
 ```
 ```bash
-#TAR installation.
+# TAR installation.
 tar zvxf 0x1p2-rpg-c*.tar.gz
 cd 0x1p2-rpg*/
 make
@@ -35,8 +35,8 @@ It's heavily influenced by Ultima Online. The **Stats**, **Skills**, and **Items
 |---|---|---|
 |Bandages|Archery|Dexterity|
 |Gold|Magery|Wisdom|
-||Fencing|Strength|
-||Swordsmanship|Luck|
+|Arrows|Fencing|Strength|
+|Reagents|Swordsmanship|Luck|
 ||Mace Fighting||
 |__MAX__ =>|120.0|255|
 

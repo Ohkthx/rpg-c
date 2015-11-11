@@ -18,7 +18,7 @@ void tools(char *code, soul_t *ptr)
 	if(!strcmp(code, "clear"))
 		write(STDOUT_FILENO, CLEAR_SCREE_ANSI, 12);	// Clears the screen.
 
-	else if(!strcmp(code, "pause"))
+	else if(!strncmp(code, "pause", 5))
 	{
 		//sleep(DELAY);		// Depreciated temporarily.
 		printf("\n  Press [enter] to continue... ");
@@ -26,12 +26,11 @@ void tools(char *code, soul_t *ptr)
 		while (((ch = getchar()) != '\n') && (ch != EOF));	// Until [enter] is pressed.
 		write(STDOUT_FILENO, CLEAR_SCREE_ANSI, 12);		// Clear the screen.
 
-	} else if(!strcmp(code, "menu")) 
+	} else if(!strncmp(code, "menu", 4)) 
 	{
 		printf("\n Press [enter] to continue, [m] for menu... ");	
 		fputs("\0337", stdout);					// Hold spot in buffer/screen.
 		fflush(stdout);
-		//scanf("%c", &ch);
 		ch = getchar();
 		if(ch == '\n' || ch == EOF)				// If [enter] is pressed, clear.
 			write(STDOUT_FILENO, CLEAR_SCREE_ANSI, 12);	// Clear.
