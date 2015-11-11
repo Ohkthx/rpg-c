@@ -195,6 +195,8 @@ void stat_print(struct soul * ptr)
 	printf(" +--[   I T E M S   ]\n");
 	printf(" |    *  Gold    : " BYEL "%.2f\n" RESET, ptr->gold);
 	printf(" |    *  Bandaids: " BRED "%d\n" RESET, ptr->item->amount);
+	printf(" |    *  Arrows  : " KGRN "%d\n" RESET, ptr->objs.arrow.amount);
+	printf(" |    *  Reagents: " KGRN "%d\n" RESET, ptr->objs.reagent.amount);
 	printf(" | \n");
 	printf(" +--[   A T T R I B U T E S   ]\n");
 	printf(" |    *  Strength : " KRED "%d" RESET "\tWisdom: " BCYN "%d\n" RESET, ptr->stats.strength, ptr->stats.wisdom);
