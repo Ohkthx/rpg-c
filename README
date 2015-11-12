@@ -21,6 +21,10 @@ Compiled using make in the the same directory as this README file.
 
 ;- Start of Change Log.
 Change Log:
+	12, NOV:
+		+ Working on implementing threading into combat. Player and NPC attack speed 
+		   will be determined based off of a "weapon speed" stat. Combat will be less
+		   linear.
 	11, NOV:
 		+ If away from the main menu, option 'x' (store) will be "invalid"
 		+ Added a store to purchase consumables (arrows, bandages, and reagents.)
