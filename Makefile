@@ -12,7 +12,7 @@ SRCEXT      := c
 OBJEXT      := o
 
 #Flags, Libraries and Includes
-CFLAGS      := -Wall
+CFLAGS      := -Wall -g
 LIB         := -lpthread 
 
 #---------------------------------------------------------------------------------
