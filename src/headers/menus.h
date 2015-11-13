@@ -1,5 +1,5 @@
 #ifndef G_TOOLS_INCLUDED
-#define G_TOOLS_INCLUDED
+#define G_TOOLS_INCLUDED	1
 
 #define MAXCHAR 1024
 

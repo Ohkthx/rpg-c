@@ -1,5 +1,5 @@
 #ifndef _LOCATION_HEADER_H
-#define _LOCATION_HEADER_H
+#define _LOCATION_HEADER_H	1
 
 #include "soul_create.h"
 

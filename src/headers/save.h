@@ -1,5 +1,5 @@
 #ifndef _SL_INCLUDED
-#define _SL_INCLUDED
+#define _SL_INCLUDED	1
 
 #include "soul_create.h"
 

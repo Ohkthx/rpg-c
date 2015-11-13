@@ -1,5 +1,5 @@
 #ifndef _COMBAT_HEADER
-#define _COMBAT_HEADER
+#define _COMBAT_HEADER	1
 
 #include "soul_create.h"
 #include "menus.h"

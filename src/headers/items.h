@@ -1,5 +1,5 @@
 #ifndef _items_header_h
-#define _items_header_h
+#define _items_header_h	1
 
 #include "soul_create.h"
 

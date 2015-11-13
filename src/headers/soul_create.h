@@ -1,5 +1,5 @@
 #ifndef ORGA_CREATE_INCLUDED
-#define ORGA_CREATE_INCLUDED
+#define ORGA_CREATE_INCLUDED	1
 
 #include "skills.h"
 
