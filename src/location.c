@@ -82,44 +82,44 @@ void world_grab(struct node *head)
 	// echophere.ru:  dungeon:name:NAME;
 	// 		  dungeon:description:DESCRIPTION;
 
-	wd = fopen("data/ecosphere.in", "r");
+	wd = fopen("data/ecosphere.in", "r");		// Open the world data.
 	while((ch = fgetc(wd)) != EOF)
 	{
-		if(ch == '\n')
+		if(ch == '\n')					// On newline...
 		{
-			string[n] = '\0';
-			n = -1;
+			string[n] = '\0';			//  terminate the string.
+			n = -1;					//  set n = 0 (-1 will be ++)
 
-			if(strlen(string) > 0)
-				tokk = strtok(string, ":;");
+			if(strlen(string) > 0)			// If '\n\n' caught, don't strtok.
+				tokk = strtok(string, ":;");	// tokk will be the token.
 			
-			if(!strncmp(tokk, "dungeon", 7))
+			if(!strncmp(tokk, "dungeon", 7))	// If token is dungeon...
 			{
 				tokk = strtok(NULL, ":;");
-				if(!strncmp(tokk, "name", 4)) {
+				if(!strncmp(tokk, "name", 4)) {		// if second token is name...
 					tokk = strtok(NULL, ":;");
 					if(i == 0)
 					{
-						amt = strtol(tokk, &ptr, 10);
-						amt = (rand() % amt) + 1;
+						amt = strtol(tokk, &ptr, 10);	// Amount of room names. *See the actual first line of the world data.
+						amt = (rand() % amt) + 1;	// Get the random room name number.
 						i++;
 					} else {
 						x++;
-						if(x == amt) 
-							strncpy(c->name, tokk, 24);
+						if(x == amt) 	// if x is the equivalent to the rand()...
+							strncpy(c->name, tokk, 24);	// Set the room name to this one..
 					}
-				} else if(!strncmp(tokk, "description", 11))
+				} else if(!strncmp(tokk, "description", 11))	// If first token is description.
 				{
 					tokk = strtok(NULL, ":;");
 					if(i == 1) {
-						amt = strtol(tokk, &ptr, 10);
-						amt = (rand() % amt) + 1;
+						amt = strtol(tokk, &ptr, 10);	// Get the amount of descriptions
+						amt = (rand() % amt) + 1;	// Get a random description identity.
 						x = 0;
 						i++;
 					} else {
 						x++;
-						if(x == amt)
-							strncpy(c->d, tokk, 128);
+						if(x == amt)			// If x is the rand()...
+							strncpy(c->d, tokk, 128);	// Set the description to this one.
 					}
 				}   
 			}
@@ -127,8 +127,8 @@ void world_grab(struct node *head)
 
 		string[n] = ch;
 		n++;
-	}
-	fclose(wd);
+	}	
+	fclose(wd);	// Close the file.
 }
 
 

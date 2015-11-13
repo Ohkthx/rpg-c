@@ -44,9 +44,9 @@ int soul_create(soul_t *creature, char *name, char *desc, char p_class, int lvl)
 					creature->name, creature->desc, creature->hp, creature->dmg, creature->speed);
 			printf(" Primary Skill:\n   %s, %.1f \n", creature->skill->name, creature->skill->val);
 
-			item_init(&creature->objs.bandaid, "Bandage",  25);
+			item_init(&creature->objs.bandaid, "Bandage",  25);	// Give player bandages.
 
-			save(creature);
+			save(creature);		// Save the player.
 			getchar();
 			tools("pause", NULL);
 		} else
@@ -60,9 +60,9 @@ int soul_create(soul_t *creature, char *name, char *desc, char p_class, int lvl)
 		creature->gold = (250.00 * ((float)lvl / 2));				// Gold being held.
 
 		
-		item_init(&creature->objs.bandaid, "Bandage",  0);
+		item_init(&creature->objs.bandaid, "Bandage",  0);	// No bandages for the NPC!
 
-		class_create(creature, p_class, lvl);
+		class_create(creature, p_class, lvl);			// Assign the class.
 	}
 
 

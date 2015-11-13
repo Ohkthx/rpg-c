@@ -167,16 +167,16 @@ void item_store(objects_t *items, float *gold)
 		switch(ch)
 		{
 			case 'b':
-				i = &items->bandaid;
-				item_buy(i, gold);
+				i = &items->bandaid;	// Set the item to bandaids.
+				item_buy(i, gold);	// Pass bandaids and player gold.
 				break;
 			case 'a':
-				i = &items->arrow;
-				item_buy(i, gold);
+				i = &items->arrow;	// Set the item to arrow.
+				item_buy(i, gold);	// Pass arrows and player gold.
 				break;
 			case 'r':
-				i = &items->reagent;
-				item_buy(i, gold);
+				i = &items->reagent;	// Set the item to reagent.
+				item_buy(i, gold);	// Pass reagents and player gold.
 				break;
 			case 'q':
 				n = 0;
@@ -192,22 +192,22 @@ void item_store(objects_t *items, float *gold)
 
 void item_buy(item_t *item, float *gold)
 {
-	long   amt;
+	long  amt;
 	float cost;
 	char  ch, amnt[16], *tmp;
 
 	printf("\n  Amount to buy of %s: ", item->name);
 	fgets(amnt, 16, stdin);
-	amt = strtol(amnt, &tmp, 10);
+	amt = strtol(amnt, &tmp, 10);		// Convert the string to long.
 
 	printf("   Amt: %ld, cost: %.2f \n", amt, item->cost * amt);
-	cost = amt * item->cost;
+	cost = amt * item->cost;		// Calculate the cost.
 	if(cost > *gold)
 		printf("\n  %.2f is greater than you can afford: %.2f \n", cost, *gold);
 	else {
 		printf("\n  Total cost: %.2f for %ld %s(s), okay? [y/n]: ", cost, amt, item->name);
 		ch = getchar();
-		getchar();
+		getchar();		// Captures the '\n' and prevents skipping.
 		ch = tolower(ch);
 
 		if(ch == 'y')

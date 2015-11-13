@@ -233,37 +233,35 @@ void readme_read(void)
 
 	tools("clear", NULL);
 
-	rd = fopen("README", "r");
-	while((ch = fgetc(rd)) != EOF)
+	rd = fopen("README", "r");		// Opens the readme.
+	while((ch = fgetc(rd)) != EOF)		
 	{
 		string[n] = ch;
-		if(string[n] == '\n') {
-			string[n] = '\0';
+		if(string[n] == '\n') {		// If a newline ('\n') occurs...
+			string[n] = '\0';	//  terminate the string.
 			n = -1;
 
-			if(s_flag == 1) {
-				printf("%s\r", string);
-				nl++;
-				if(nl > 7) {
-					//fputs("\0337", stdout);
-					getchar();
-					//fputs("\0338", stdout);
-				} else
-					printf("\n");
+			if(s_flag == 1) {	// If reading enabled.
+				printf("%s\r", string);	// Print the strong
+				nl++;			// Count the amount of strings.
+				if(nl > 7) {		// If strings are above 7,
+					getchar();	// pause to allow for reading.
+				} else			// Else
+					printf("\n");	//	just continue printing lines.
 			}
 		}
 		if((s_flag == 0) && (string[n] == '-') && (string[n - 1] == ';')) {
-			if(n == 1)
-				s_flag = 1;
+			if(n == 1)		// ;- is the token to symbolize start of Changelog.
+				s_flag = 1;	// Enable reading (above in the code)
 		} else if((s_flag == 1) && (string[n] == '-') && (string[n - 1] == ';')) {
 			if(n == 1)
-				s_flag = 0;
+				s_flag = 0;	// Disable reading if ;- occurs on a new line.
 		}
 
 		n++;
 	}
 	
-	fclose(rd);
-	while((ch = getchar()) != 'c')
+	fclose(rd);	// Close the file.
+	while((ch = getchar()) != 'c')		// Placed to prevent compulsive skipping of text.
 		printf(" Enter ['c' + enter] to continue: ");
 }

@@ -11,28 +11,26 @@
 
 int combat(soul_t *ptr)
 {
-	int n;
-	char ch, string[sizeof(long) + 1], *tmp;
+	long n;						// Will hold the level of the selected mob.
+	char ch, string[sizeof(long) + 1], *tmp;	// Used for the conversationg to long.
 
 	printf("\n\tLevel of dummy [1 - 9]: ");
-	fgets(string, (sizeof(long) + 1), stdin);
-	n = strtol(string, &tmp, 10);
+	fgets(string, (sizeof(long) + 1), stdin);	// fgets replaced poor scanf
+	n = strtol(string, &tmp, 10);			// Converts string to long.
 
 	printf("\n\t[a]rcher, [m]age, [w]arrior...\n");
-	printf("\tType of mob [a, m, w]: ");
+	printf("\tType of mob [a, m, w]: ");		// Get the type.
 	ch = getchar();
 	getchar();	// Captures newline from previous; So you don't skip a round.
 
 	if((n > 0 && n < 10 ) && (ch == 'a' || ch == 'm' || ch == 'w'))
 	{
-		struct soul *mPtr = malloc(sizeof(soul_t));
-		soul_create(mPtr, "Training Dummy", "WAF", ch, n);
-	
-		round_start(ptr, mPtr);	// Start combat.
-	
-		free(mPtr);
+		struct soul *mPtr = malloc(sizeof(soul_t));		// Allocate the memory for npc.
+		soul_create(mPtr, "Training Dummy", "WAF", ch, n);	// Assign values.
+		round_start(ptr, mPtr);					// Start combat.
+		free(mPtr);						// Free the allocated memory.
 	} else { 
-		printf("\n Bad options supplied!\n");
+		printf("\n Bad options supplied!\n");			// Repeat until good selection.
 		getchar();
 		tools("pause", NULL);
 	}
@@ -60,14 +58,15 @@ void round_start(soul_t *player, soul_t *npc)
 	player->stats.range_c = player->stats.range; 	// Start of round to set current range
 	npc->stats.range_c = npc->stats.range;		//  to the max range of the mob/person.
 
-	if(player->stats.cls == 'a')
+							// Set the player/mobs primary consumable
+	if(player->stats.cls == 'a')				// If Archer...
 		player->consumable = &player->objs.arrow;
-	else if(player->stats.cls == 'm')
+	else if(player->stats.cls == 'm')			// If Mage...
 		player->consumable = &player->objs.reagent;
 	else
-		player->consumable = &npc->objs.null;
+		player->consumable = &npc->objs.null;		// Else a warrior.
 
-	if(npc->stats.cls == 'a')
+	if(npc->stats.cls == 'a')				// Look at the lines above.
 		npc->consumable = &npc->objs.arrow;
 	else if(npc->stats.cls == 'm')
 		npc->consumable = &npc->objs.reagent;
@@ -123,12 +122,12 @@ void round_start(soul_t *player, soul_t *npc)
 		if(a_->hp_c == 0 || d_->hp_c ==0)	// A check for HP, to end the round.
 			break;
 
-		//fputs("\0337", stdout);	// Part of *new* menu.
-		//fputs("\033[0;4H\r", stdout); // Part of *new* menu.
-		menus(player, 2); 		// 3  for *new* menu.
+		//fputs("\0337", stdout);		// Part of *new* menu.
+		//fputs("\033[0;4H\r", stdout);		// Part of *new* menu.
+		menus(player, 2); 			// 3  for *new* menu.
 		menus(player, 4);
-		menus(npc, 11);			// 12 for *new* menu.
-		//fputs("\0338", stdout);	// Part of *new* menu
+		menus(npc, 11);				// 12 for *new* menu.
+		//fputs("\0338", stdout);		// Part of *new* menu
 
 		player->speed = (rand() % (sizeof(byte) - 10));	// Calculate speeds for next round.
 		npc->speed = (rand() % (sizeof(byte) - 20));
@@ -276,8 +275,8 @@ void attack(soul_t *attacker, soul_t *defender)
 	if(attacker->type == 'p') {
 		// 36 CYAN   31 RED
 		stat_check(attacker, 0);
-		strncpy(a_sign, "\x1B[36;1m+\033[0m", sizeof(a_sign));
-		strncpy(d_sign, "\x1B[31;1m-\033[0m", sizeof(d_sign));
+		strncpy(a_sign, "\x1B[36;1m+\033[0m", sizeof(a_sign));	// Just cosmetics of a colored +
+		strncpy(d_sign, "\x1B[31;1m-\033[0m", sizeof(d_sign));	
 
 	} else {
 		strncpy(a_sign, "\x1B[31;1m-\033[0m", sizeof(a_sign));
@@ -294,8 +293,8 @@ void attack(soul_t *attacker, soul_t *defender)
 		menus(attacker, 2);	// Post the death menu.
 
 	} else if(t_dmg < defender->hp_c) {
-		attacker->dmg -= defender->def;
-		defender->hp_c -= attacker->dmg;
+		attacker->dmg -= defender->def;		// Attacker damage is (attacker dmg - defender def)
+		defender->hp_c -= attacker->dmg;	// Defenders HP is Current hp - attackers damage.
 		printf("\t[%s]  %s performed " BRED "%d" RESET " damage to %s.\n", a_sign, attacker->name, attacker->dmg, defender->name);
 		if(defender->def != 0)
 			printf("\t  [%s]  %s blocked " BBLU "%d" RESET " damage!\n\n", d_sign, defender->name, defender->def);
@@ -336,7 +335,7 @@ int defense_calc(soul_t *ptr)
 			tools("pause", NULL);
 	}
 
-//	if(ptr->type == 'm')
+//	if(ptr->type == 'm')	// Lowers the monsters maximum defense. Less chance of Full Block
 		n = (double)n * (3.0 / 5.0);
 
 	return n;
@@ -390,33 +389,33 @@ int stat_check(soul_t *ptr, int special)
 }
 
 void stat_gain(soul_t *ptr)
-{
+{	/* Needs to be reworked with pointers to primary, secondaray, and tertiary stats. */
 	byte primary, secondary, tertiary;
 	char *pri_name, *sec_name, *ter_name;
 
 	switch(ptr->stats.cls)
 	{
 		case 'm':
-			primary   = ptr->stats.wisdom;
-			secondary = ptr->stats.dexterity;
-			tertiary  = ptr->stats.strength;
+			primary   = ptr->stats.wisdom;		// Primary for Mage: Wisdom
+			secondary = ptr->stats.dexterity;	// Secondary: Dexterity
+			tertiary  = ptr->stats.strength;	// Tertiary: Strength
 			pri_name  = "Wisdom";
 			sec_name  = "Dexterity";
 			ter_name  = "Strength";
 			break;
 		case 'a':
-			primary   = ptr->stats.dexterity;
-			secondary = ptr->stats.strength;
-			tertiary  = ptr->stats.wisdom;
+			primary   = ptr->stats.dexterity;	// Primary for Archer: Dexterity
+			secondary = ptr->stats.strength;	// Secondary: Strength
+			tertiary  = ptr->stats.wisdom;		// Tertiary: Wisdom
 			pri_name  = "Dexterity";
 			sec_name  = "Strength";
 			ter_name  = "Wisdom";
 			break;
 
 		case 'w':
-			primary   = ptr->stats.strength;
-			secondary = ptr->stats.dexterity;
-			tertiary  = ptr->stats.wisdom;
+			primary   = ptr->stats.strength;	// Primary for Warrior: Strength
+			secondary = ptr->stats.dexterity;	// Secondary: Dexterity
+			tertiary  = ptr->stats.wisdom;		// Tertiary: Wisdom
 			pri_name  = "Strength";
 			sec_name  = "Dexterity";
 			ter_name  = "Wisdom";
