@@ -21,6 +21,12 @@ Compiled using make in the the same directory as this README file.
 
 ;- Start of Change Log.
 Change Log:
+	15, NOV:
+		+ Working on a Circular Buffer for combat (to tie in with threaded combat.)
+	14, NOV:
+		+ Started work on Circular buffer.
+	13, NOB:
+		+ Threaded combat working... not implemented.
 	12, NOV:
 		+ Working on implementing threading into combat. Player and NPC attack speed 
 		   will be determined based off of a "weapon speed" stat. Combat will be less
