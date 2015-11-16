@@ -21,7 +21,11 @@ Compiled using make in the the same directory as this README file.
 
 ;- Start of Change Log.
 Change Log:
+	16, NOV:
+		+ Threaded Combat working with Rotational Buffer. 
+		+ New Header: buffer.h
 	15, NOV:
+		+ Circular (rotational) buffer working.
 		+ Working on a Circular Buffer for combat (to tie in with threaded combat.)
 	14, NOV:
 		+ Started work on Circular buffer.
