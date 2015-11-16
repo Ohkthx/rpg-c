@@ -4,11 +4,13 @@
 #include <unistd.h>		// For sleep.
 #include <string.h>
 #include <stdarg.h>
+#include "buffer.h"
+
 
 #define THREADS 2
 
+
 void *thread_task(void *arg);
-void bprintf(char *fmt, ...);
 
 typedef struct soul
 {
@@ -22,26 +24,16 @@ typedef struct soul
 
 } soul_t;
 
-typedef struct buffer
-{
-	char cbuf[512];
-	char *start;	char *end;
-	char *c;
-	int nl;
-
-} buffer_t;
-
 
 pthread_t	tid[THREADS];
 pthread_mutex_t	lock;
-struct buffer *buf;
 
 int main(void)
 {
 	void *status;
 	long i;
 
-	buf = malloc(sizeof(buffer_t));
+	binit();	/* initiate the buffer */
 
 	pthread_attr_t attr;
 
@@ -73,40 +65,33 @@ int main(void)
 
 	/*  Join the threads. */
 	pthread_attr_destroy(&attr);
-	
+
 	for(i = 0; i < THREADS; i++)
 		pthread_join(tid[i], &status);
 
 	pthread_mutex_destroy(&lock);
 	free(n);
 	free(p);
+	free(buf);		/* Free the buffer */
 	pthread_exit(NULL);
-}
-
-
-void bprintf(char *fmt, ...)
-{
-	va_list ap;
-	va_start(ap, fmt);
-	vsnprintf(buf->cbuf, sizeof(buf), fmt, ap);
-	va_end(ap);
 }
 
 
 void *thread_task(void *arg)
 {
 	struct soul *l = (struct soul *) arg;
-	printf("%s initialized; Fighting: %s. \n", l->name, l->opp->name);
 
 	while(l->hp_c > 0 && l->opp->hp_c > 0)
 	{
 
 		pthread_mutex_lock(&lock);	/* Initiate a lock. */
 		l->hp_c -= l->opp->dmg;
+		bwrite("%s took %d. Hp is: %d, Speed: %d", l->name, l->opp->dmg, l->hp_c, l->speed);
 		pthread_mutex_unlock(&lock);	/* Unlock the code block. */
-		bprintf("%s took %d. Hp is: %d, Speed: %d \n", l->name, l->opp->dmg, l->hp_c, l->speed);
+		bprintf();
 		sleep(l->speed);
 	}
 
 	pthread_exit((void *) 0);	/* Exit the thread. */
 }
+

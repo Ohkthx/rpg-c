@@ -3,53 +3,9 @@
 #include <string.h>
 #include <stdarg.h>
 #include <unistd.h>
+#include <pthread.h>
 
-#define MAXCHAR 64
-#define STRINGS 6
-
-
-typedef struct buffer
-{
-	char cbuf[MAXCHAR*STRINGS];
-	char *start;	char *end;
-	char *c;	char *s[7];
-	int n;
-
-} buffer_t;
-
-struct buffer *buf;
-
-void bwrite(char *fmt, ...);
-void binit(void);
-void bprintf(void);
-void bshift(void);
-
-int main(int argc, char *argv[])
-{
-	binit();
-	char *ptr;
-
-	if(argc < 2)
-	{
-		printf("Not enough arguments. \n");
-		exit(-1);
-	} 
-
-	long n;
-	n = strtol(argv[1], &ptr, 10);
-	
-	
-	for(int i = 0; i < n; i++)
-		bwrite("Number: %d", i);
-
-	bprintf();
-
-	printf("\n");
-
-	free(buf);
-	return 0;
-}
-
+#include "buffer.h"
 
 void bshift(void)
 {
@@ -92,20 +48,18 @@ void bwrite(char *fmt, ...)
 		buf->s[STRINGS-1] = &buf->cbuf[((STRINGS-1)*MAXCHAR)];
 	}
 
-	//	printf("NY: n = %d \n", buf->n);
-	//	sprintf(buf->cbuf + (buf->n * MAXCHAR), "%s", string);
-	//	buf->s[buf->n] = &buf->cbuf[buf->n*MAXCHAR];
-
 	va_end(ap);
 }
 
 void bprintf(void)
 {
-	printf("- - - - - - - - - -\n");
+	system("clear");
+	printf("- - - - - - - - - - - - - - - - - - - -\n");
 	for(int n = 0; n < STRINGS; n++)
 	{
 		if(buf->s[n] != NULL)
 			printf(" %s \n", buf->s[n]);
 	}
-	printf("- - - - - - - - - -\n");
+	printf("- - - - - - - - - - - - - - - - - - - -\n");
+
 }
