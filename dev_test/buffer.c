@@ -3,7 +3,6 @@
 #include <string.h>
 #include <stdarg.h>
 #include <unistd.h>
-#include <time.h>
 
 #define MAXCHAR 64
 #define STRINGS 6
@@ -25,20 +24,27 @@ void binit(void);
 void bprintf(void);
 void bshift(void);
 
-int main(void)
+int main(int argc, char *argv[])
 {
-	time_t t;
-	srand((unsigned) time(&t));
-
 	binit();
+	char *ptr;
+
+	if(argc < 2)
+	{
+		printf("Not enough arguments. \n");
+		exit(-1);
+	} 
+
+	long n;
+	n = strtol(argv[1], &ptr, 10);
 	
-	for(int n = 0; n < 100; n++)
-		bwrite("Number: %d", n);
+	
+	for(int i = 0; i < n; i++)
+		bwrite("Number: %d", i);
 
 	bprintf();
 
 	printf("\n");
-	bshift();
 
 	free(buf);
 	return 0;
@@ -47,13 +53,14 @@ int main(void)
 
 void bshift(void)
 {
-	printf("In bshift.\n");
-	for(int n = STRINGS; n > 1; n--)
+	int n;
+
+	for(n = 0; n < STRINGS-1; n++)
 	{
-		buf->s[n-2] = buf->s[n-1];
-		buf->s[n-1] = buf->s[n];
-		printf("%s -> %s \n", buf->s[n-1], buf->s[n]);
+		if(buf->s[n+1] != NULL)
+			strncpy(buf->s[n], buf->s[n+1], 64);
 	}
+
 }
 
 void binit(void)
@@ -74,20 +81,31 @@ void bwrite(char *fmt, ...)
 	va_start(ap, fmt);
 
 	vsnprintf(string, MAXCHAR, fmt, ap);
-	//if(buf->n > (STRINGS - 1))
-	//	buf->n = 0;
-	sprintf(buf->cbuf + (buf->n * MAXCHAR), "%s", string);
-	buf->s[buf->n] = &buf->cbuf[buf->n*MAXCHAR];
-	buf->n++;
+	if(buf->n < STRINGS)
+	{
+		sprintf(buf->cbuf + (buf->n * MAXCHAR), "%s", string);
+		buf->s[buf->n] = &buf->cbuf[buf->n*MAXCHAR];
+		buf->n++;
+	} else {
+		bshift();
+		sprintf(buf->cbuf + ((STRINGS-1) * MAXCHAR), "%s", string);
+		buf->s[STRINGS-1] = &buf->cbuf[((STRINGS-1)*MAXCHAR)];
+	}
+
+	//	printf("NY: n = %d \n", buf->n);
+	//	sprintf(buf->cbuf + (buf->n * MAXCHAR), "%s", string);
+	//	buf->s[buf->n] = &buf->cbuf[buf->n*MAXCHAR];
 
 	va_end(ap);
 }
 
 void bprintf(void)
 {
+	printf("- - - - - - - - - -\n");
 	for(int n = 0; n < STRINGS; n++)
 	{
 		if(buf->s[n] != NULL)
-			printf("%s \n", buf->s[n]);
+			printf(" %s \n", buf->s[n]);
 	}
+	printf("- - - - - - - - - -\n");
 }
