@@ -32,18 +32,6 @@
 #include "location.h"
 
 
-typedef struct buffer
-{
-	char buff[MAXCHAR];
-	char *start;
-	char *end;
-	int *pos;
-	int l_cnt;
-
-} buffer_t;
-
-//int getint(int *num);
-
 void tools(char *code, soul_t *ptr);
 void menus(soul_t *ptr, byte code);
 void hpbar(soul_t *ptr, char *string, int bar_amount);
@@ -51,6 +39,5 @@ void round_menu(soul_t *ptr);
 void stat_print(soul_t *ptr);
 void quit(soul_t *ptr, node_t *head);
 void readme_read(void);
-//void bprintf(buffer_t *pbuf, char *fmt, ...);
 
 #endif

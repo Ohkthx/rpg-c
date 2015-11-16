@@ -45,14 +45,6 @@ void round_start(soul_t *player, soul_t *npc)
 	byte n;	// byte n is what will be returned to the function that calls on this.
 	int w;	// Used in the switch statement 
 
-	/*b_buff_t buf, *pbuf;
-	pbuf = &buf;
-
-	memset(&buf.buff, 0, sizeof(buf.buff));
-	buf.start = &buf.buff[0];
-	buf.end   = &buf.buff[MAXCHAR - 1];
-	buf.pos   = 0; */
-
 	n = -1;	// n is returned at the completion of this function.
 
 	player->stats.range_c = player->stats.range; 	// Start of round to set current range

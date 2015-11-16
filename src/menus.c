@@ -20,7 +20,6 @@ void tools(char *code, soul_t *ptr)
 
 	else if(!strncmp(code, "pause", 5))
 	{
-		//sleep(DELAY);		// Depreciated temporarily.
 		printf("\n  Press [enter] to continue... ");
 		fflush(stdout);
 		while (((ch = getchar()) != '\n') && (ch != EOF));	// Until [enter] is pressed.
@@ -121,22 +120,6 @@ void hpbar(soul_t *ptr, char *string, int bar_amount)
                         string[n] = ' ';	// Fill in empty space with blanks.
         }
         string[n] = '\0';	// Terminate the array with a null char.
-}
-
-
-void bprintf(buffer_t *pbuf, char *fmt, ...)
-{
-	/*  DEPRECIATED TERMPORARILY;
-	 *   Will be used to have a 'Queue' for the battle log. Reminder: Circular Buffer */
-
-	/*  vsnprintf, prints assigns the *fmt into the buff, to be printed by printf */
-	va_list ap;
-	va_start(ap, fmt);
-	vsnprintf(pbuf->buff, MAXCHAR, fmt, ap);
-	va_end(ap);
-
-	printf("<< %s", pbuf->buff);          // Only prints if DEBUG is set to 2.
-	//printf("SIZE: %d\n", (int)strlen(pbuf->buff));
 }
 
 
