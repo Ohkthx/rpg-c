@@ -12,8 +12,9 @@ SRCEXT      := c
 OBJEXT      := o
 
 #Flags, Libraries and Includes
-CFLAGS      := -Wall -g
-LIB         := -lpthread 
+CFLAGS      := -Wall -g -pg
+LFLAGS      := -pg
+LIB         := -pthread 
 
 #---------------------------------------------------------------------------------
 #DO NOT EDIT BELOW THIS LINE
@@ -42,7 +43,7 @@ cleaner: clean
 
 #Link
 $(TARGET): $(OBJECTS)
-	$(CC) -o $(TARGET) $^ $(LIB) 
+	$(CC) $(LFLAGS) -o $(TARGET) $^ $(LIB) 
 
 #Compile
 $(BUILDDIR)/%.$(OBJEXT): $(SRCDIR)/%.$(SRCEXT)

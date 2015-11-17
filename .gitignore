@@ -31,6 +31,7 @@ rpg-c
 
 # Debug files
 *.dSYM/
+gmon.out
 
 # Vim
 *.swp
