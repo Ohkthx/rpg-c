@@ -8,18 +8,6 @@
 #include "headers/buffer.h"
 #include "headers/menus.h"
 
-void bshift(void)
-{
-	int n;
-
-	for(n = 0; n < STRINGS-1; n++)
-	{
-		if(buf->s[n+1] != NULL)
-			strncpy(buf->s[n], buf->s[n+1], MAXBUFF);
-	}
-}
-
-
 void binit(void)
 {
 	buf = malloc(sizeof(buffer_t));
@@ -29,6 +17,13 @@ void binit(void)
 	buf->end   = &buf->cbuf[MAXBUFF*STRINGS-1];
 	buf->c     = buf->start;
 	buf->n = 0;
+}
+
+
+void bfree(void)
+{
+	memset(buf, 0, sizeof(buffer_t));
+	free(buf);
 }
 
 
@@ -74,3 +69,17 @@ void bprintf(soul_t *ptr)
 	menus(ptr, 2);
 	menus(ptr->o, 2);
 }
+
+
+void bshift(void)
+{
+	int n;
+
+	for(n = 0; n < STRINGS-1; n++)
+	{
+		if(buf->s[n+1] != NULL)
+			strncpy(buf->s[n], buf->s[n+1], MAXBUFF);
+	}
+}
+
+

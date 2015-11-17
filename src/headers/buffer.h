@@ -19,9 +19,10 @@ typedef struct buffer
 
 struct buffer *buf;
 
-void bwrite(char *fmt, ...);
 void binit(void);
-void bprintf(soul_t *ptr);
+void bfree(void);
 void bshift(void);
+void bwrite(char *fmt, ...);
+void bprintf(soul_t *ptr);
 
 #endif

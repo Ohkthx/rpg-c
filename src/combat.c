@@ -16,7 +16,7 @@ pthread_mutex_t	lock;
 int combat(soul_t *ptr)
 {
 	long n;						// Will hold the level of the selected mob.
-	char ch, string[sizeof(long) + 1], *tmp;	// Used for the conversationg to long.
+	char ch, string[sizeof(long) + 1], *tmp;	// Used for the conversation to long.
 
 	printf("\n\tLevel of dummy [1 - 9]: ");
 	fgets(string, (sizeof(long) + 1), stdin);	// fgets replaced poor scanf
@@ -38,6 +38,8 @@ int combat(soul_t *ptr)
 		getchar();
 		tools("pause", NULL);
 	}
+
+	bfree();
 
 	return 0;
 }
@@ -71,11 +73,13 @@ void round_start(soul_t *player, soul_t *npc)
 	/*  Join the threads. */
 	pthread_attr_destroy(&attr);
 	for(int i = 0; i < THREADS; i++)
+	{
 		pthread_join(tid[i], &status);
+		free(status);
+	}
 
 	pthread_mutex_destroy(&lock);
-
-	free(buf);		/* Free the buffer */
+	
 	player->o = NULL;
 	npc->o    = NULL;
 
@@ -465,5 +469,6 @@ void *soul_thread(void *soul)
 		sleep(a_->speed);
 	}
 
-	pthread_exit((void *) 0);
+	//pthread_exit((void *) 0);	// Depreciated to prevent unneeded assigned memory.
+	return NULL;
 }

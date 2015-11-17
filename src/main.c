@@ -12,6 +12,7 @@
 #include "headers/save.h"
 #include "headers/items.h"
 #include "headers/location.h"
+#include "headers/buffer.h"
 
 
 int main(void)
@@ -35,6 +36,7 @@ int main(void)
 	while(1)
 		stage(head, ptr);
 
-	return 0;
+	//return 0;
+	pthread_exit((void *) 0);
 }
 
