@@ -64,6 +64,7 @@ void round_start(soul_t *player, soul_t *npc)
 
 	pthread_create(&tid[0], &attr, soul_thread, (void *) player);
 	pthread_create(&tid[1], &attr, soul_thread, (void *) npc);
+	pthread_create(&tid[2], &attr, menu_thread, (void *) player);
 
 	while(player->hp_c != 0 && npc->hp_c != 0)
 	{
@@ -470,5 +471,17 @@ void *soul_thread(void *soul)
 	}
 
 	//pthread_exit((void *) 0);	// Depreciated to prevent unneeded assigned memory.
+	return NULL;
+}
+
+void *menu_thread(void *soul)
+{
+	struct soul *a_ = (struct soul *) soul;
+	struct soul *d_ = a_->o;
+
+	while(a_->hp_c > 0 && d_->hp_c > 0)
+	{
+		buf->ch = getchar();
+	}
 	return NULL;
 }

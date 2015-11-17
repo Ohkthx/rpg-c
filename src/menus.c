@@ -54,15 +54,14 @@ void menus(soul_t *ptr, byte code)
 	struct objects *obj = &ptr->objs;
 
 	int hp, hp_c, bar_amount;
-	bar_amount = 10;
+	bar_amount = 15;
 
 	char hp_string[bar_amount + 1];
 
 	hp = ptr->hp;		// Easier to read; HP of the struct person being passed.
 	hp_c = ptr->hp_c;	// Holds current hp.
 
-	hpbar(ptr, hp_string, bar_amount);
-	/*  Grab the current HP status bar */
+	hpbar(ptr, hp_string, bar_amount); /*  Grab the current HP status bar */
 	if(code == 0)
 		code = 0;	
 	else if(code == 1)
@@ -75,6 +74,9 @@ void menus(soul_t *ptr, byte code)
 	} else if(code == 3)
 	{
 		printf(" +------------------------------------------------------------------ \n");
+	} else if(code == 4)
+	{
+		printf("\x1b[99A \x1b[13B Test \x1b[99A \n");
 	}
 		
 }

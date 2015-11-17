@@ -2,11 +2,12 @@
 #define _BUFFER_H 1
 
 
-#define MAXBUFF 128
-#define STRINGS 5
-
 #include "soul_create.h"
 
+#define STRINGS 5
+#define MAXBUFF 128
+
+#define XY(x, y) printf("\x1b[%d;%dH", x, y);
 
 typedef struct buffer
 {
@@ -14,6 +15,7 @@ typedef struct buffer
 	char *start;	char *end;
 	char *c;	char *s[STRINGS];
 	int n;		int u;
+	char ch;
 
 } buffer_t;
 
