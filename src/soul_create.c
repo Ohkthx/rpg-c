@@ -33,14 +33,14 @@ int soul_create(soul_t *creature, char *name, char *desc, char p_class, int lvl)
 			fgets(creature->desc, sizeof(creature->desc), stdin);	//set p->desc to input data.
 			creature->desc[strcspn(creature->desc, "\n")] = 0;	// removetrailing '\n'
 
-			creature->speed = (rand() % (sizeof(byte) - 10));	// Generate player speed
+			creature->speed = 3.5;	// Generate player speed
 			creature->luck = 25;		// Set player's initial luck.
 			creature->type = 'p';		// Set player's type. ( p = player, m = mob )
 			creature->gold = 500.00;	// Set base gold value player owns.
 
 			class_create(creature, 0, 1);	// Call on selectings the player's class.
 
-			printf("\n Player name: %s\n Description: %s\n  Health: %d\n  Damage: %d\n  Speed: %d\n",
+			printf("\n Player name: %s\n Description: %s\n  Health: %d\n  Damage: %d\n  Speed: %.1f",
 					creature->name, creature->desc, creature->hp, creature->dmg, creature->speed);
 			printf(" Primary Skill:\n   %s, %.1f \n", creature->skill->name, creature->skill->val);
 
@@ -55,7 +55,7 @@ int soul_create(soul_t *creature, char *name, char *desc, char p_class, int lvl)
 	{
 		strncpy(creature->name, name, sizeof(creature->name));	// Changed from strcpy (safer now)
 		strncpy(creature->desc, desc, sizeof(creature->desc));	// Same as above.
-		creature->speed = (rand() % (sizeof(byte) - 20));	// Set speed.
+		creature->speed = 4.5;	// Set speed.
 		creature->type = 'm';				// Set type to mob ( m = mob )
 		creature->gold = (250.00 * ((float)lvl / 2));				// Gold being held.
 

@@ -3,11 +3,15 @@
 #include <string.h>
 #include <time.h>
 #include <unistd.h>
+#include <pthread.h>
 
 #include "headers/combat.h"
 #include "headers/menus.h"
 #include "headers/items.h"
+#include "headers/buffer.h"	/* For the circular buffer. */
 
+pthread_t	tid[THREADS];
+pthread_mutex_t	lock;
 
 int combat(soul_t *ptr)
 {
@@ -41,91 +45,39 @@ int combat(soul_t *ptr)
 
 void round_start(soul_t *player, soul_t *npc)
 {
-	soul_t *a_, *d_;	//a_ = attacker, d_ = defender
+	void *status;
+
+	binit();		/* Initialize the buffer */
 	byte n;	// byte n is what will be returned to the function that calls on this.
-	int w;	// Used in the switch statement 
 
-	n = -1;	// n is returned at the completion of this function.
+	player->o = npc;
+	npc->o    = player;
 
-	player->stats.range_c = player->stats.range; 	// Start of round to set current range
-	npc->stats.range_c = npc->stats.range;		//  to the max range of the mob/person.
+	pthread_attr_t attr;
+	pthread_mutex_init(&lock, NULL);
 
-							// Set the player/mobs primary consumable
-	if(player->stats.cls == 'a')				// If Archer...
-		player->consumable = &player->objs.arrow;
-	else if(player->stats.cls == 'm')			// If Mage...
-		player->consumable = &player->objs.reagent;
-	else
-		player->consumable = &npc->objs.null;		// Else a warrior.
+	/*  Create the threads. */
+	pthread_attr_init(&attr);
+	pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
 
-	if(npc->stats.cls == 'a')				// Look at the lines above.
-		npc->consumable = &npc->objs.arrow;
-	else if(npc->stats.cls == 'm')
-		npc->consumable = &npc->objs.reagent;
-	else
-		npc->consumable = &npc->objs.null;
-	
-	tools("clear", NULL);
-	//printf("Player hp: %d, Monster: %d\n", player->hp_c, npc->hp_c);
+	pthread_create(&tid[0], &attr, soul_thread, (void *) player);
+	pthread_create(&tid[1], &attr, soul_thread, (void *) npc);
 
 	while(player->hp_c != 0 && npc->hp_c != 0)
 	{
-		player->hp = ((player->stats.strength * 3) + 50);
-		menus(player, 11);	// 11 for *new* menu.
-		menus(player, 4);
-		menus(npc, 1);		// 33 for *new* menu.
-
-		player->dmg = damage_calc(player);	// Calculate players damage for the round.
-		npc->dmg = damage_calc(npc);
-
-		player->def = defense_calc(player);
-		npc->def = defense_calc(npc);
-
-		if(player->speed > npc->speed)	// Figure out who is attacker and who is the 
-		{				//  defender for this round. This pointer will
-			a_ = player;		//  be passed to the attacker/defender functions
-			d_ = npc;		//  in lieu of the the actual initialised structs.
-		} else {
-			a_ = npc;
-			d_ = player;
-		}
-
-		switch(w = range_count(a_, d_))		// Checks the range between each mob. 
-		{					// If:   The attack range is greater than the
-			case 1:				//  defenders max range, it will attack
-				if(item_consume(a_))
-					attack(a_, d_);	//  without being attacked.
-				break;			// Performs the same check for defender.
-			case 2:	
-				if(item_consume(d_))
-					attack(d_, a_);	// Defender attacks if has higher range.
-				break;
-			case -1:
-				break;
-			default:
-				if(item_consume(a_))
-					attack(a_, d_);	// Attackers attack.
-				if(d_->hp_c == 0)	// Placed to prevent excess
-					break;		//  turn from happening.
-				if(item_consume(d_))
-					attack(d_, a_);	// Defender's attack.
-		}
-		
-		if(a_->hp_c == 0 || d_->hp_c ==0)	// A check for HP, to end the round.
-			break;
-
-		//fputs("\0337", stdout);		// Part of *new* menu.
-		//fputs("\033[0;4H\r", stdout);		// Part of *new* menu.
-		menus(player, 2); 			// 3  for *new* menu.
-		menus(player, 4);
-		menus(npc, 11);				// 12 for *new* menu.
-		//fputs("\0338", stdout);		// Part of *new* menu
-
-		player->speed = (rand() % (sizeof(byte) - 10));	// Calculate speeds for next round.
-		npc->speed = (rand() % (sizeof(byte) - 20));
-
-		tools("menu", player);
+		bprintf(player);
 	}
+
+	/*  Join the threads. */
+	pthread_attr_destroy(&attr);
+	for(int i = 0; i < THREADS; i++)
+		pthread_join(tid[i], &status);
+
+	pthread_mutex_destroy(&lock);
+
+	free(buf);		/* Free the buffer */
+	player->o = NULL;
+	npc->o    = NULL;
 
 	if(player->hp_c != 0)	// At the end of round, player is not dead...
 		n = 1;		// Return players survival.
@@ -147,12 +99,12 @@ void round_post(soul_t *player, soul_t *npc, byte result)
 	
 	if(result == 1)		// Survived the round, calc gold etc.
 	{
-		printf(" NPC Gold: " BYEL "%.2f\n" RESET, npc->gold);
-		printf(" Player Gold: " BYEL "%.2f\n" RESET, player->gold);
+		printf("   NPC Gold: " BYEL "%.2f\n" RESET, npc->gold);
+		printf("   Player Gold: " BYEL "%.2f\n" RESET, player->gold);
 
 		/*  Calculate player obtained gold (includes luck) */
 		player->gold += (npc->gold + (rand() % (player->luck * 2)));
-		printf(" New player gold: " BYEL "%.2f\n" RESET, player->gold);
+		printf("   New player gold: " BYEL "%.2f\n" RESET, player->gold);
 
 
 	} else if(result == 0) {		// Player death.
@@ -195,11 +147,9 @@ int damage_calc(soul_t *ptr)
 			n = -1;
 			tools("pause", NULL);
 	}
-	//printf(" [ DEBUG ]   n = %d\n", n);
 
 	if(ptr->type == 'm')
 		n = (double)n * (3.0 / 4.0);
-	//printf(" [ DEBUG ]   n = %d\n", n);
 
 	return n;
 }
@@ -276,20 +226,23 @@ void attack(soul_t *attacker, soul_t *defender)
 	}
 
 	if(defender->def > attacker->dmg || t_dmg == 0) {
-		printf("\t[%s]  %s performed a " KCYN "full block" RESET " of %s's attack!\n\n", a_sign, defender->name, attacker->name);
+		bwrite("\t[%s]  %s performed a " KCYN "full block" RESET " of %s's attack!", a_sign, defender->name, attacker->name);
 
 	} else if(t_dmg >= defender->hp_c) {		// Kill defender if damage is greater than health.
-		printf("\t[%s]  %s did " BRED "%d" RESET " damage to %s (" BRED "%d" RESET " overkill),\n\t\t %s is dead...\n\n", 
+		bwrite("\t[%s]  %s did " BRED "%d" RESET " damage to %s (" BRED "%d" RESET " overkill),\n\t\t %s is dead...", 
 				a_sign, attacker->name, t_dmg, defender->name, (t_dmg - defender->hp_c), defender->name);
 		defender->hp_c = 0;	// Set the defenders HP to reflect.
-		menus(attacker, 2);	// Post the death menu.
+	//	menus(attacker, 2);	// Post the death menu.
 
 	} else if(t_dmg < defender->hp_c) {
 		attacker->dmg -= defender->def;		// Attacker damage is (attacker dmg - defender def)
 		defender->hp_c -= attacker->dmg;	// Defenders HP is Current hp - attackers damage.
-		printf("\t[%s]  %s performed " BRED "%d" RESET " damage to %s.\n", a_sign, attacker->name, attacker->dmg, defender->name);
 		if(defender->def != 0)
-			printf("\t  [%s]  %s blocked " BBLU "%d" RESET " damage!\n\n", d_sign, defender->name, defender->def);
+		{
+			bwrite("\t[%s]  %s performed " BRED "%d" RESET " damage to %s ("BBLU "%d" RESET " was blocked!) ", 
+					a_sign, attacker->name, attacker->dmg, defender->name, defender->def);
+		} else
+			bwrite("\t[%s]  %s performed " BRED "%d" RESET " damage to %s.", a_sign, attacker->name, attacker->dmg, defender->name);
 
 	} else {
 		printf("ERROR: Something happened?\n");
@@ -468,3 +421,49 @@ void stat_gain(soul_t *ptr)
 }
 
 
+void *soul_thread(void *soul)
+{
+	struct soul *a_ = (struct soul *) soul;
+	struct soul *d_ = a_->o;
+	int w;	/* Range count result */
+	//int n;	/* Return of winner to round_post */
+
+	a_->stats.range_c = a_->stats.range; 	// Start of round to set current range
+							// Set the player/mobs primary consumable
+	if(a_->stats.cls == 'a')				// If Archer...
+		a_->consumable = &a_->objs.arrow;
+	else if(a_->stats.cls == 'm')			// If Mage...
+		a_->consumable = &a_->objs.reagent;
+	else
+		a_->consumable = &a_->objs.null;		// Else a warrior.
+
+
+	while(a_->hp_c > 0 && d_->hp_c > 0)
+	{
+		a_->hp = ((a_->stats.strength * 3) + 50);
+		a_->dmg = damage_calc(a_);	// Calculate players damage for the round.
+		d_->def = defense_calc(d_);
+
+		w = range_count(a_, d_);		// Checks the range between each mob. 
+		if(w == 1 || w == 0)
+		{					// If:   The attack range is greater than the
+			if(item_consume(a_))
+			{
+				//pthread_mutex_lock(&lock);
+				attack(a_, d_);	//  without being attacked.
+				//pthread_mutex_unlock(&lock);
+			}
+
+			if(d_->hp_c == 0)	// Placed to prevent excess
+				break;		//  turn from happening.
+		}
+
+		
+		if(a_->hp_c == 0 || d_->hp_c ==0)	// A check for HP, to end the round.
+			break;
+
+		sleep(a_->speed);
+	}
+
+	pthread_exit((void *) 0);
+}

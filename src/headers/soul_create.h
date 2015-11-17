@@ -33,7 +33,7 @@ typedef struct soul
         int dmg;        int def;
 	int o_mod;	int d_mod;	// Both unused.
         float gold;
-        byte luck;      byte speed;
+        byte luck;      float speed;	// Speed is normally byte_t
         byte type;
 
  	stats_t     stats;	// Player's stats
@@ -42,6 +42,7 @@ typedef struct soul
 	skill_t     *skill;	// Link to primary skill.
 	objects_t   objs;	// Holds items.
 	container_t bucket;	// Holds the skills.
+	struct soul *o;		// Opposition of the soul (combat);
 
 } soul_t; 
 

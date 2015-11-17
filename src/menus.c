@@ -61,42 +61,18 @@ void menus(soul_t *ptr, byte code)
 	hp = ptr->hp;		// Easier to read; HP of the struct person being passed.
 	hp_c = ptr->hp_c;	// Holds current hp.
 
-
+	hpbar(ptr, hp_string, bar_amount);
 	/*  Grab the current HP status bar */
 	if(code == 0)
 		code = 0;	
 	else if(code == 1)
 	{
-		hpbar(ptr, hp_string, bar_amount);
-		printf(" |  %c :: [" KRED "%s" RESET "]  %d/%d\trange: %d\t(%s, %s)\n", ptr->type, hp_string, hp_c, hp, ptr->stats.range_c, ptr->name, ptr->desc);
-		printf(" |\t\t---| %s: %d |-      -| %s: %d |--- \n", ptr->consumable->name, ptr->consumable->amount, obj->bandaid.name, obj->bandaid.amount);
-		printf(" #-----------------\\__|  P R E     R O U N D  |__/----------------#\n\n\n");
-
-	} else if(code == 11)
-	{
-		hpbar(ptr, hp_string, bar_amount);
-		printf(" |  %c :: ["KRED"%s"RESET"]  %d/%d\trange: %d\t(%s, %s)\n", ptr->type, hp_string, hp_c, hp, ptr->stats.range_c, ptr->name, ptr->desc);
-		printf(" |\t\t---| %s: %d |-      -| %s: %d |--- \n", ptr->consumable->name, ptr->consumable->amount, obj->bandaid.name, obj->bandaid.amount);
-
+		printf("  ---| %s: %d |-      -| %s: %d |---\t%s\n", ptr->consumable->name, ptr->consumable->amount, obj->bandaid.name, obj->bandaid.amount, ptr->name);
 	} else if(code == 2)
 	{
-		printf("\n #_________________/--|  P O S T   R O U N D  |--\\________________#\n");
-		hpbar(ptr, hp_string, bar_amount);
-		printf(" |  %c :: ["KRED"%s"RESET"]  %d/%d\trange: %d\t(%s, %s)\n", ptr->type, hp_string, hp_c, hp, ptr->stats.range_c, ptr->name, ptr->desc);
-		printf(" |\t\t---| %s: %d |-      -| %s: %d |--- \n", ptr->consumable->name, ptr->consumable->amount, obj->bandaid.name, obj->bandaid.amount);
+		printf("   ["KRED"%s"RESET"]  %d/%d\t(%s, %s)\n", hp_string, hp_c, hp, ptr->name, ptr->desc);
 
 	} else if(code == 3)
-	{
-		printf(" #________________/--|  T H I S   R O U N D  |--\\________________#\n");
-		hpbar(ptr, hp_string, bar_amount);
-		printf("   %c :: ["KRED"%s"RESET"]  %d/%d\t(%s, %s)\n", ptr->type, hp_string, hp_c, hp, ptr->name, ptr->desc);
-
-	} else if(code == 33)
-	{
-		hpbar(ptr, hp_string, bar_amount);
-		printf("   %c :: ["KRED"%s"RESET"]  %d/%d\t(%s, %s)\n", ptr->type, hp_string, hp_c, hp, ptr->name, ptr->desc);
-		printf("\n #----------------\\__|  T H I S   R O U N D  |__/----------------#\n\n\n");
-	} else if(code == 4)
 	{
 		printf(" +------------------------------------------------------------------ \n");
 	}

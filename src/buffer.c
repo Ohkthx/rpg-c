@@ -5,7 +5,8 @@
 #include <unistd.h>
 #include <pthread.h>
 
-#include "buffer.h"
+#include "headers/buffer.h"
+#include "headers/menus.h"
 
 void bshift(void)
 {
@@ -14,52 +15,62 @@ void bshift(void)
 	for(n = 0; n < STRINGS-1; n++)
 	{
 		if(buf->s[n+1] != NULL)
-			strncpy(buf->s[n], buf->s[n+1], 64);
+			strncpy(buf->s[n], buf->s[n+1], MAXBUFF);
 	}
-
 }
+
 
 void binit(void)
 {
 	buf = malloc(sizeof(buffer_t));
-	memset(&buf->cbuf, 0, MAXCHAR*STRINGS);
+	memset(&buf->cbuf, 0, MAXBUFF*STRINGS);
 
 	buf->start = &buf->cbuf[0];
-	buf->end   = &buf->cbuf[MAXCHAR*STRINGS-1];
+	buf->end   = &buf->cbuf[MAXBUFF*STRINGS-1];
 	buf->c     = buf->start;
 	buf->n = 0;
 }
 
+
 void bwrite(char *fmt, ...)
 {
-	char string[MAXCHAR];
+	char string[MAXBUFF];
 	va_list ap;
 	va_start(ap, fmt);
 
-	vsnprintf(string, MAXCHAR, fmt, ap);
+	vsnprintf(string, MAXBUFF, fmt, ap);
 	if(buf->n < STRINGS)
 	{
-		sprintf(buf->cbuf + (buf->n * MAXCHAR), "%s", string);
-		buf->s[buf->n] = &buf->cbuf[buf->n*MAXCHAR];
+		sprintf(buf->cbuf + (buf->n * MAXBUFF), "%s", string);
+		buf->s[buf->n] = &buf->cbuf[buf->n*MAXBUFF];
 		buf->n++;
 	} else {
 		bshift();
-		sprintf(buf->cbuf + ((STRINGS-1) * MAXCHAR), "%s", string);
-		buf->s[STRINGS-1] = &buf->cbuf[((STRINGS-1)*MAXCHAR)];
+		sprintf(buf->cbuf + ((STRINGS-1) * MAXBUFF), "%s", string);
+		buf->s[STRINGS-1] = &buf->cbuf[((STRINGS-1)*MAXBUFF)];
 	}
+
+	buf->u = 1;
 
 	va_end(ap);
 }
 
-void bprintf(void)
+
+void bprintf(soul_t *ptr)
 {
-	system("clear");
-	printf("- - - - - - - - - - - - - - - - - - - -\n");
+	while(buf->u == 0) 
+		;
+	tools("clear", NULL);
+	menus(ptr, 1);
+	menus(ptr->o, 1);
+	printf("- - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n");
 	for(int n = 0; n < STRINGS; n++)
 	{
 		if(buf->s[n] != NULL)
 			printf(" %s \n", buf->s[n]);
 	}
-	printf("- - - - - - - - - - - - - - - - - - - -\n");
-
+	printf("- - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n");
+	buf->u = 0;
+	menus(ptr, 2);
+	menus(ptr->o, 2);
 }

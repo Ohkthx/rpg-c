@@ -74,6 +74,7 @@ int save(soul_t *ptr)
 		fprintf(fd, "luck:%d;\n", ptr->luck);
 		fprintf(fd, "type:%c;\n", ptr->type);
 		fprintf(fd, "range:%d;\n", ptr->stats.range);
+		fprintf(fd, "speed:%.1f;\n", ptr->speed);
 		//fprintf(fd, "\n -   L O C K S   - - - - - - - - - - - - - \n");
 		fprintf(fd, "primary_lock:%d;\n", ptr->stats.p_lck);
 		fprintf(fd, "secondary_lock:%d;\n", ptr->stats.s_lck);
@@ -197,6 +198,9 @@ int load_profile(soul_t *ptr)
 				} else if(!strncmp(tokk, "range", 5)) {
 					ptr->stats.range = load_d(0);
 
+				} else if(!strncmp(tokk, "speed", 5)) {
+					ptr->speed = load_d(1);
+
 				} else if(!strncmp(tokk, "primary_lock", 12)) {
 					ptr->stats.p_lck = load_d(0);
 
@@ -238,7 +242,7 @@ int load_profile(soul_t *ptr)
 
 		ptr->hp = ((ptr->stats.strength * 3) + 50);
 		ptr->hp_c = ptr->hp;
-		ptr->speed = (rand() % (sizeof(byte) - 10));
+		//ptr->speed = (rand() % (sizeof(byte) - 10));
 
 		fclose(fd);
 	}
