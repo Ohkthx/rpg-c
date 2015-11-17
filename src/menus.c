@@ -148,27 +148,27 @@ void stat_print(struct soul * ptr)
 
 	tools("clear", NULL);
 	//printf(" +--------------------------------------+\n");
-	printf(" +--[   D E T A I L S   ]\n");
+	printf(" /--[   D E T A I L S   ]\n");
 	printf(" |   *  %s,\tthe %s\n", ptr->name, pclass);
 	printf(" |\t %s\n", ptr->desc);
 	printf(" | \n");
-	printf(" +--[   I T E M S   ]\n");
-	printf(" |    *  Gold    : " BYEL "%.2f\n" RESET, ptr->gold);
-	printf(" |    *  Bandaids: " BRED "%d\n" RESET, ptr->item->amount);
-	printf(" |    *  Arrows  : " KGRN "%d\n" RESET, ptr->objs.arrow.amount);
-	printf(" |    *  Reagents: " KGRN "%d\n" RESET, ptr->objs.reagent.amount);
+	printf(" |--[   I T E M S   ]\n");
+	printf(" | |- Gold    : " BYEL "%.2f\n" RESET, ptr->gold);
+	printf(" | |- Bandaids: " BRED "%d\n" RESET, ptr->item->amount);
+	printf(" | |- Arrows  : " KGRN "%d\n" RESET, ptr->objs.arrow.amount);
+	printf(" | \\- Reagents: " KGRN "%d\n" RESET, ptr->objs.reagent.amount);
 	printf(" | \n");
-	printf(" +--[   A T T R I B U T E S   ]\n");
-	printf(" |    *  Strength : " KRED "%d" RESET "\tWisdom: " BCYN "%d\n" RESET, ptr->stats.strength, ptr->stats.wisdom);
-	printf(" |    *  Dexterity: " BYEL "%d" RESET "\n", ptr->stats.dexterity);
-        printf(" |    *  Luck     : " BGRN "%d" RESET "\tRange: " KGRN "%d\n" RESET, ptr->luck, ptr->stats.range);
+	printf(" |--[   A T T R I B U T E S   ]\n");
+	printf(" | |- Strength : " KRED "%d" RESET "\tWisdom: " BCYN "%d\n" RESET, ptr->stats.strength, ptr->stats.wisdom);
+	printf(" | |- Dexterity: " BYEL "%d" RESET "\n", ptr->stats.dexterity);
+        printf(" | \\- Luck     : " BGRN "%d" RESET "\tRange: " KGRN "%d\n" RESET, ptr->luck, ptr->stats.range);
 	printf(" | \n");
-	printf(" +--[   S T A T U S ]\n");
-	printf(" |    [" KRED "%s" RESET "]\n", string);
-	printf(" |    *  Maximum Health: " KRED "%d\n" RESET, ptr->hp);
-	printf(" |    *  Current Health: " BRED "%d\n" RESET, ptr->hp_c);
+	printf(" |--[   S T A T U S ]\n");
+	printf(" | |-[" KRED "%s" RESET "]\n", string);
+	printf(" | |- Maximum Health: " KRED "%d\n" RESET, ptr->hp);
+	printf(" | \\- Current Health: " BRED "%d\n" RESET, ptr->hp_c);
 	printf(" | \n");
-	printf(" +--------------------------------------+\n");
+	printf(" \\--------------------------------------+\n");
 
 
 	tools("pause", NULL);
