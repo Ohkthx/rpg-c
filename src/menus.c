@@ -106,15 +106,13 @@ void round_menu(soul_t *ptr)
 	char ch;
 	ptr->item = &ptr->objs.bandaid;
 
-	//fputs("\0337", stdout);	
 	printf("\n  s) Save Information.\n  h) Bandage [%d]\n  q) Quit (menu)\n\n Option: ", ptr->item->amount);
-	//fputs("\0337", stdout);
 	ch = getchar(); // Required to eat '\n' for next statement.
 
 	if(ch == 's')		// Save the character.
 		save(ptr);
 	else if(ch == 'h')	// heal the character/
-		item_use(ptr, "bandaid");
+		item_use(ptr, "bandaid", 0);
 	else if(ch == 'q')	// quit this menu.
 		printf("Leaving menu...\n");
 	getchar();

@@ -228,7 +228,7 @@ void stage(struct node *head, struct soul *ptr)
 				tools("pause", NULL);
 				break;
 			case 'h':
-				item_use(ptr, "bandaid");	// Use bandages to heal.
+				item_use(ptr, "bandaid", 0);	// Use bandages to heal.
 				tools("pause", NULL);
 				break;
 			case 'c':

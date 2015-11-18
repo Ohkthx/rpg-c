@@ -72,7 +72,7 @@ void item_init(item_t *item, char *name, int amount)
 }
 
 
-void item_use(soul_t *ptr, char *name)
+void item_use(soul_t *ptr, char *name, long use_amt)
 {
 	long amount;
 	int oh;		// Overheal
@@ -81,9 +81,13 @@ void item_use(soul_t *ptr, char *name)
 	if(!strncmp(name, "bandaid", 7))
 	{
 		ptr->item = &ptr->objs.bandaid;		// Set players main item to bandaid. 
-		printf("\n  Amount to use [%d]: ", ptr->item->amount);	
-		fgets(amnt, 10, stdin); 
-		amount = strtol(amnt, &tmp, 10);
+		if(use_amt == 0)
+		{
+			printf("\n  Amount to use [%d]: ", ptr->item->amount);	
+			fgets(amnt, 10, stdin); 
+			amount = strtol(amnt, &tmp, 10);
+		} else
+			amount = use_amt;
 
 		if(amount != 0 && ptr->item->amount != 0)
 		{

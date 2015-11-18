@@ -3,6 +3,7 @@
 #include <string.h>
 #include <time.h>
 #include <unistd.h>
+#include <ctype.h>
 #include <pthread.h>
 
 #include "headers/combat.h"
@@ -474,14 +475,36 @@ void *soul_thread(void *soul)
 	return NULL;
 }
 
+
 void *menu_thread(void *soul)
 {
 	struct soul *a_ = (struct soul *) soul;
 	struct soul *d_ = a_->o;
 
+	char string[11];
+	char *pos, *ptr;
+
+	long amt;
+
 	while(a_->hp_c > 0 && d_->hp_c > 0)
 	{
 		buf->ch = getchar();
+		if(buf->ch == 'm')
+		{
+			printf("Caught menu... : ");
+			XY(18, 0);
+			fgets(string, 11, stdin);
+			XY(20, 0);
+			printf("%s \n", string);
+			tolower(string[0]);
+			if(string[0] == 'h')
+			{
+				string[0] = '\0';
+				pos = &string[1];
+				amt = strtol(pos, &ptr, 10);
+				item_use(a_, "bandaid", amt);
+			}
+		}
 	}
 	return NULL;
 }

@@ -53,13 +53,8 @@ void bwrite(char *fmt, ...)
 
 void bprintf(soul_t *ptr)
 {
-	while(buf->u == 0 && buf->ch != 'm') 
-		if(buf->ch == 'm')
-		{
-			XY(16, 0);
-			printf("Got an 'm'\n");
-		}
-		//;
+	while(buf->u == 0)
+		;
 	tools("clear", NULL);
 	XY(15, 0);
 	printf(" THIS IS A STOP FOR THE MENU \n");
