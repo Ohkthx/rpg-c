@@ -379,9 +379,8 @@ void stat_gain(soul_t *ptr)
 
 	if(!ptr->stats.p_lck)
 	{
-		printf("\t[" BYEL "+" RESET "]  " BYEL "%s" RESET " [%d] has increased to ", pri_name, primary);
+		bwrite("\t[" BYEL "+" RESET "]  " BYEL "%s" RESET " [%d] has increased to %d", pri_name, primary, primary+1);
 		primary++;
-		printf("%d.\n", primary);
 
 		if(ptr->stats.cls == 'm')
 			ptr->stats.wisdom = primary;
@@ -394,9 +393,8 @@ void stat_gain(soul_t *ptr)
 
 	} else if(!ptr->stats.s_lck)
 	{
-		printf("\t[" BYEL "+" RESET "]  " BYEL "%s" RESET " [%d] has increased to ", sec_name, secondary);
+		bwrite("\t[" BYEL "+" RESET "]  " BYEL "%s" RESET " [%d] has increased to %d", sec_name, secondary, secondary+1);
 		secondary++;
-		printf("%d.\n", secondary);
 
 		if(ptr->stats.cls == 'm')
 			ptr->stats.dexterity = secondary;
@@ -409,9 +407,8 @@ void stat_gain(soul_t *ptr)
 
 	} else if(!ptr->stats.t_lck)
 	{
-		printf("\t[" BYEL "+" RESET "]  " BYEL "%s" RESET " [%d] has increased to ", ter_name, tertiary);
+		bwrite("\t[" BYEL "+" RESET "]  " BYEL "%s" RESET " [%d] has increased to %d", ter_name, tertiary, tertiary+1);
 		tertiary++;
-		printf("%d.\n", tertiary);
 
 		if(ptr->stats.cls == 'm')
 			ptr->stats.strength = tertiary;
