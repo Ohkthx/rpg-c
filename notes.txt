@@ -1,0 +1,12 @@
+REVISITED PROJECT:
+
+Create configuration file:
+	- Combat Buffer Length
+	- Base difficulty
+	
+Change the Save/Load procedure:
+	- Double check (loop it) for settings. Useful for adding the configuration file in the event it is out of order.
+
+Add skills:
+	- Make use of skills at skills.c/skills.h
+
