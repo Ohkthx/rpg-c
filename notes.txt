@@ -10,3 +10,6 @@ Change the Save/Load procedure:
 Add skills:
 	- Make use of skills at skills.c/skills.h
 
+Mid-Combat Menu:
+	- Complete mid-combat menu, thread halting? 'm' is hotkey to activate.
+
