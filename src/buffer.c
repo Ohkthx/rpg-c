@@ -57,7 +57,7 @@ void bprintf(soul_t *ptr)
 		;
 	tools("clear", NULL);
 	XY(15, 0);
-	printf(" THIS IS A STOP FOR THE MENU \n");
+	// printf(" THIS IS A STOP FOR THE MENU \n");	// Shows where buffer will end.
 	XY(0, 0);
 	menus(ptr, 1);
 	menus(ptr->o, 1);

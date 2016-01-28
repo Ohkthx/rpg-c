@@ -379,7 +379,8 @@ void stat_gain(soul_t *ptr)
 
 	if(!ptr->stats.p_lck)
 	{
-		bwrite("\t[" BYEL "+" RESET "]  " BYEL "%s" RESET " [%d] has increased to %d", pri_name, primary, primary+1);
+	//	bwrite("\t[" BYEL "+" RESET "]  " BYEL "%s" RESET " [%d] has increased to %d", pri_name, primary, primary+1);
+		bwrite("\t  " BYEL "==> %s" RESET " [%d] has increased to %d", pri_name, primary, primary+1);
 		primary++;
 
 		if(ptr->stats.cls == 'm')
